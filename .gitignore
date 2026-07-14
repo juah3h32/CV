@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# full Morganite Pro font family source (commercial license) — only the
+# ExtraBold + Bold web weights actually used ship from public/fonts/
+/MorganitePro/

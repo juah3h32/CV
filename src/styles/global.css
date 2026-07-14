@@ -1,11 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Archivo+Black&display=swap');
-/*
-  "Morganite Extra Bold" is a paid commercial font (Yellow Design Studio) —
-  no free CDN distribution exists. Archivo Black (Google Fonts, weight 900)
-  is the closest freely-licensable match: extra bold grotesk, tight-set
-  uppercase, same punch. Drop real Morganite .woff2 files into /public/fonts
-  and swap the @font-face below to use them if you own a license.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@font-face {
+  font-family: 'Morganite Pro';
+  src: url('/fonts/MorganitePro-ExtraBold.woff2') format('woff2'),
+       url('/fonts/MorganitePro-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Morganite Pro';
+  src: url('/fonts/MorganitePro-Bold.woff2') format('woff2'),
+       url('/fonts/MorganitePro-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --white: #ffffff;
@@ -31,7 +41,7 @@
   --container: 1180px;
   --radius: 18px;
   --radius-sm: 10px;
-  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-display: 'Morganite Pro', 'Arial Black', sans-serif;
   --font-body: 'Helvetica Neue', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Arial, sans-serif;
 }
 
@@ -55,7 +65,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: -0.005em;
   line-height: 0.98;
-  font-weight: 400;
+  font-weight: 800;
 }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
@@ -148,6 +158,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   border: 1px solid transparent;
   transition: transform .45s var(--ease), box-shadow .45s var(--ease), background .3s ease, color .3s ease;
 }
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 .btn-primary {
   background: var(--ink);
   color: var(--white);
