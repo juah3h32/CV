@@ -49,7 +49,6 @@
   --radius-sm: 10px;
   --font-display: 'Morganite Pro', 'Arial Black', sans-serif;
   --font-body: 'Helvetica Neue', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, Arial, sans-serif;
-  --sidebar-w: 296px;
 }
 
 * { box-sizing: border-box; }
