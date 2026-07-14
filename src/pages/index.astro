@@ -194,85 +194,67 @@ const languages = [
 
   <div class="progress-rail" id="progressRail"></div>
 
-  <button class="sidebar-open" id="sidebarOpen" aria-label="Abrir menú">
-    <span></span><span></span><span></span>
-  </button>
-
-  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <button class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-    </button>
-
-    <div class="sidebar-profile">
-      <div class="sidebar-photo">
-        <img src="/images/profile.jpeg" alt="Retrato de Juan Pablo Corona Corona" />
-      </div>
-      <h1 class="sidebar-name">Juan Pablo<br />Corona</h1>
-      <p class="sidebar-role">Frontend Developer<br />UI/UX Designer</p>
-    </div>
-
-    <nav class="sidebar-nav">
-      {nav.map((item) => (
-        <a href={item.href} data-nav>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
-          <span>{item.label}</span>
-        </a>
-      ))}
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-social">
-        <a href="mailto:Coronapablo99@gmail.com" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.mail} />
-        </a>
-        <a href="tel:4434845466" aria-label="Teléfono">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.phone} />
-        </a>
-        <a href="https://portafoliojuanpa.com" target="_blank" rel="noopener noreferrer" aria-label="Sitio">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.globe} />
+  <header class="nav" id="siteNav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand">JP<span>·</span>Corona</a>
+      <nav class="nav-links" id="navLinks">
+        {nav.map((item) => (
+          <a href={item.href} data-nav>{item.label}</a>
+        ))}
+      </nav>
+      <div class="nav-cta">
+        <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-ghost btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
+          Descargar CV
         </a>
       </div>
-      <a href="/images/cv-juan-pablo-corona.jpg" download class="sidebar-cv">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
-        Descargar CV
-      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </aside>
+  </header>
 
-  <div class="content-area">
   <main id="top">
 
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero section--dark">
       <div class="hero-bg" aria-hidden="true">
         <div class="hero-grid"></div>
         <div class="hero-glow"></div>
       </div>
       <div class="wrap hero-inner">
-        <div class="hero-copy">
-          <p class="eyebrow" data-reveal>Frontend Developer · UI/UX Designer</p>
-          <h1 data-reveal>
-            <span class="line">Diseño &amp; desarrollo</span>
-            <span class="line">web con <em>propósito</em></span>
-          </h1>
-          <p class="hero-sub" data-reveal>
-            Soy Juan Pablo Corona Corona. Construyo sitios modernos, rápidos y visualmente
-            impecables — combinando código, animación, fotografía y video de producto en un
-            solo flujo de trabajo.
-          </p>
-          <div class="hero-actions" data-reveal>
-            <a href="#projects" class="btn btn-primary">Ver proyectos</a>
-            <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-ghost">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
-              Descargar CV
+        <div class="hero-card" data-reveal>
+          <div class="hero-photo-frame">
+            <img src="/images/profile.jpeg" alt="Retrato de Juan Pablo Corona Corona" />
+          </div>
+          <h1 class="hero-name">Juan Pablo<br />Corona</h1>
+          <p class="hero-role">Frontend Developer · UI/UX Designer</p>
+          <div class="hero-social">
+            <a href="mailto:Coronapablo99@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.mail} />
+            </a>
+            <a href="tel:4434845466" aria-label="Teléfono">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.phone} />
+            </a>
+            <a href="https://portafoliojuanpa.com" target="_blank" rel="noopener noreferrer" aria-label="Sitio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.globe} />
             </a>
           </div>
-          <div class="hero-tags" data-reveal>
-            <span>Ing. Entornos Virtuales y Negocios Digitales</span>
-            <span>Morelia, Michoacán, México</span>
-          </div>
+        </div>
+        <p class="hero-sub" data-reveal>
+          Construyo sitios modernos, rápidos y visualmente impecables — combinando código,
+          animación, fotografía y video de producto en un solo flujo de trabajo.
+        </p>
+        <div class="hero-actions" data-reveal>
+          <a href="#projects" class="btn btn-primary">Ver proyectos</a>
+          <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
+            Descargar CV
+          </a>
+        </div>
+        <div class="hero-tags" data-reveal>
+          <span>Ing. Entornos Virtuales y Negocios Digitales</span>
+          <span>Morelia, Michoacán, México</span>
         </div>
       </div>
       <a href="#about" class="scroll-cue" aria-label="Desplázate hacia abajo">
@@ -282,7 +264,7 @@ const languages = [
     </section>
 
     <!-- ABOUT -->
-    <section class="section about" id="about">
+    <section class="section about section--dark2" id="about">
       <span class="ghost-num" aria-hidden="true">01</span>
       <div class="wrap about-inner">
         <div>
@@ -310,7 +292,7 @@ const languages = [
     </section>
 
     <!-- SKILLS -->
-    <section class="section skills section--gray" id="skills">
+    <section class="section skills section--dark" id="skills">
       <span class="ghost-num" aria-hidden="true">02</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -378,7 +360,7 @@ const languages = [
     </section>
 
     <!-- EXPERIENCE -->
-    <section class="section experience section--dark" id="experience">
+    <section class="section experience section--dark2" id="experience">
       <span class="ghost-num" aria-hidden="true">03</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -437,7 +419,7 @@ const languages = [
     </section>
 
     <!-- PROJECTS -->
-    <section class="section projects" id="projects">
+    <section class="section projects section--dark" id="projects">
       <span class="ghost-num" aria-hidden="true">05</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -469,7 +451,7 @@ const languages = [
     </section>
 
     <!-- EDUCATION / CERTS -->
-    <section class="section education section--gray" id="education">
+    <section class="section education section--dark2" id="education">
       <span class="ghost-num" aria-hidden="true">06</span>
       <div class="wrap education-inner">
         <div data-reveal>
@@ -549,7 +531,6 @@ const languages = [
       <span>Diseñado &amp; construido con Astro + GSAP</span>
     </div>
   </footer>
-  </div>
 
   <script>
     import { gsap } from 'gsap';
@@ -563,22 +544,28 @@ const languages = [
       scrollTrigger: { start: 0, end: 'max', scrub: 0.3 },
     });
 
-    // Sidebar drawer (mobile)
-    const sidebar = document.getElementById('sidebar');
-    const sidebarOpen = document.getElementById('sidebarOpen');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-    const closeSidebar = () => {
-      sidebar?.classList.remove('is-open');
-      sidebarBackdrop?.classList.remove('is-open');
-    };
-    sidebarOpen?.addEventListener('click', () => {
-      sidebar?.classList.add('is-open');
-      sidebarBackdrop?.classList.add('is-open');
+    // Nav scroll state
+    const siteNav = document.getElementById('siteNav');
+    ScrollTrigger.create({
+      start: 'top -80',
+      onUpdate: (self) => {
+        siteNav?.classList.toggle('is-scrolled', self.scroll() > 80);
+      },
     });
-    sidebarClose?.addEventListener('click', closeSidebar);
-    sidebarBackdrop?.addEventListener('click', closeSidebar);
-    sidebar?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeSidebar));
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle?.addEventListener('click', () => {
+      navLinks?.classList.toggle('is-open');
+      navToggle.classList.toggle('is-open');
+    });
+    navLinks?.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('is-open');
+        navToggle?.classList.remove('is-open');
+      })
+    );
 
     // Active nav link highlight
     const setActive = (id) => {
@@ -606,12 +593,12 @@ const languages = [
     // Hero entrance
     const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     heroTl
-      .from('.hero-copy .eyebrow', { y: 24, opacity: 0, duration: 0.7 })
-      .from('.hero-copy h1 .line', { y: 46, opacity: 0, duration: 0.9, stagger: 0.1 }, '-=0.45')
-      .from('.hero-sub', { y: 24, opacity: 0, duration: 0.7 }, '-=0.5')
+      .from('.hero-card', { y: 30, opacity: 0, scale: 0.95, duration: 0.8 })
+      .from('.hero-photo-frame', { scale: 0.7, opacity: 0, duration: 0.7 }, '-=0.5')
+      .from('.hero-sub', { y: 24, opacity: 0, duration: 0.7 }, '-=0.3')
       .from('.hero-actions', { y: 20, opacity: 0, duration: 0.6 }, '-=0.45')
       .from('.hero-tags', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4')
-      .from('.sidebar', { x: -40, opacity: 0, duration: 0.7 }, '-=1');
+      .from('.nav', { y: -30, opacity: 0, duration: 0.6 }, '-=1');
 
     // Generic reveal-on-scroll
     document.querySelectorAll('[data-reveal]').forEach((el) => {
@@ -747,174 +734,95 @@ const languages = [
       z-index: 200;
     }
 
-    /* SIDEBAR */
-    .content-area {
-      margin-left: var(--sidebar-w);
-    }
-    .sidebar {
+    /* NAV */
+    .nav {
       position: fixed;
-      top: 0; left: 0;
-      width: var(--sidebar-w);
-      height: 100vh;
-      z-index: 120;
-      background: var(--charcoal);
-      color: rgba(255,255,255,0.85);
-      display: flex;
-      flex-direction: column;
-      padding: 44px 30px 30px;
-      overflow-y: auto;
+      top: 0; left: 0; width: 100%;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(22, 24, 26, 0.7);
+      backdrop-filter: blur(14px) saturate(160%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: padding .4s var(--ease), box-shadow .4s var(--ease);
     }
-    .sidebar-close { display: none; }
-    .sidebar-profile {
-      text-align: center;
-      padding-bottom: 30px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .sidebar-photo {
-      width: 108px; height: 108px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid rgba(255,255,255,0.12);
+    .nav.is-scrolled {
+      padding: 13px 0;
       box-shadow: var(--shadow-md);
     }
-    .sidebar-photo img { width: 100%; height: 100%; object-fit: cover; }
-    .sidebar-name {
-      font-size: 21px;
-      line-height: 1.08;
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0;
+      text-transform: uppercase;
       color: #fff;
     }
-    .sidebar-role {
-      margin-top: 12px;
+    .brand span { color: var(--green-400); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+    .nav-links a {
       font-size: 12.5px;
-      font-weight: 500;
-      color: var(--green-400);
-      line-height: 1.5;
-    }
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 28px 0;
-      flex: 1;
-    }
-    .sidebar-nav a {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 11px 14px;
-      border-radius: 10px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.55);
-      border-left: 2px solid transparent;
-      transition: background .3s ease, color .3s ease, border-color .3s ease;
-    }
-    .sidebar-nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
-    .sidebar-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
-    .sidebar-nav a.is-active {
-      color: var(--green-300);
-      background: rgba(51,181,134,0.1);
-      border-left-color: var(--green-400);
-    }
-    .sidebar-footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .sidebar-social {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .sidebar-social a {
-      width: 36px; height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.65);
-      transition: background .3s ease, color .3s ease, transform .3s ease;
-    }
-    .sidebar-social a svg { width: 15px; height: 15px; }
-    .sidebar-social a:hover {
-      background: var(--green-500);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-    .sidebar-cv {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      transition: background .3s ease, transform .35s var(--ease);
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.55);
+      position: relative;
+      padding: 4px 0;
+      transition: color .3s ease;
     }
-    .sidebar-cv svg { width: 14px; height: 14px; }
-    .sidebar-cv:hover { background: var(--green-500); transform: translateY(-2px); }
-
-    .sidebar-open {
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1.5px;
+      background: var(--green-400);
+      transition: width .35s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.is-active { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.is-active::after { width: 100%; }
+    .btn-sm { padding: 10px 20px; font-size: 13px; }
+    .nav-toggle {
       display: none;
-      position: fixed;
-      top: 18px; left: 18px;
-      z-index: 130;
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: var(--charcoal);
-      border: none;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      box-shadow: var(--shadow-md);
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 6px;
     }
-    .sidebar-open span {
-      width: 18px; height: 2px;
+    .nav-toggle span {
+      width: 22px; height: 2px;
       background: #fff;
-    }
-    .sidebar-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 110;
-      opacity: 0;
-      transition: opacity .35s ease;
+      transition: transform .3s ease, opacity .3s ease;
     }
 
-    @media (max-width: 1000px) {
-      .content-area { margin-left: 0; }
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform .45s var(--ease);
-        box-shadow: var(--shadow-lg);
-      }
-      .sidebar.is-open { transform: translateX(0); }
-      .sidebar-close {
-        display: flex;
-        align-items: center;
+    @media (max-width: 760px) {
+      .nav-links {
+        position: fixed;
+        top: 0; right: 0;
+        height: 100vh;
+        width: min(300px, 80vw);
+        background: var(--charcoal);
+        flex-direction: column;
         justify-content: center;
-        position: absolute;
-        top: 16px; right: 16px;
-        width: 34px; height: 34px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.06);
-        border: none;
-        color: #fff;
+        align-items: flex-start;
+        padding: 40px;
+        gap: 26px;
+        box-shadow: var(--shadow-lg);
+        transform: translateX(100%);
+        transition: transform .45s var(--ease);
+        z-index: 110;
       }
-      .sidebar-close svg { width: 16px; height: 16px; }
-      .sidebar-open { display: flex; }
-      .sidebar-backdrop.is-open { display: block; opacity: 1; }
+      .nav-links.is-open { transform: translateX(0); }
+      .nav-cta { display: none; }
+      .nav-toggle { display: flex; }
     }
 
     /* HERO */
@@ -943,39 +851,85 @@ const languages = [
       filter: blur(10px);
     }
     .hero-inner {
-      max-width: 780px;
+      max-width: 640px;
+      margin: 0 auto;
+      padding-top: 110px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .hero-copy h1 {
-      font-size: clamp(40px, 6vw, 76px);
-      line-height: 1.03;
-      margin-top: 22px;
+    .hero-card {
+      padding: 44px 40px 36px;
+      border-radius: 32px;
+      background: var(--off-white);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(6px);
     }
-    .hero-copy h1 .line { display: block; }
-    .hero-copy h1 em {
-      font-style: normal;
-      color: var(--green-600);
-      background: linear-gradient(100deg, var(--green-700), var(--green-400));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero-photo-frame {
+      width: 148px; height: 148px;
+      margin: 0 auto 26px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--green-500);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-name {
+      font-size: clamp(30px, 4.5vw, 42px);
+      line-height: 1.05;
+      color: #fff;
+    }
+    .hero-role {
+      margin-top: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green-400);
+    }
+    .hero-social {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .hero-social a {
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      color: var(--ink);
+      transition: background .3s ease, border-color .3s ease, transform .3s ease;
+    }
+    .hero-social a svg { width: 16px; height: 16px; }
+    .hero-social a:hover {
+      background: var(--green-500);
+      border-color: var(--green-500);
+      color: #fff;
+      transform: translateY(-3px);
     }
     .hero-sub {
-      margin-top: 26px;
+      margin-top: 32px;
       max-width: 480px;
-      font-size: 18px;
+      font-size: 17px;
       color: var(--ink-soft);
     }
     .hero-actions {
-      margin-top: 36px;
+      margin-top: 32px;
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .hero-tags {
-      margin-top: 46px;
+      margin-top: 40px;
       display: flex;
       gap: 26px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .hero-tags span {
       font-size: 13px;
@@ -1059,7 +1013,7 @@ const languages = [
       font-family: var(--font-display);
       font-size: 40px;
       font-weight: 700;
-      color: var(--green-700);
+      color: var(--green-400);
     }
     .stat-label {
       margin-top: 8px;
@@ -1101,7 +1055,7 @@ const languages = [
     .bar-track {
       height: 8px;
       border-radius: 999px;
-      background: var(--white);
+      background: var(--off-white);
       border: 1px solid var(--line);
       overflow: hidden;
     }
@@ -1112,11 +1066,23 @@ const languages = [
       background: linear-gradient(90deg, var(--green-600), var(--green-400));
     }
     .bar-pct {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--green-700);
-      text-align: right;
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--green-500);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 700;
       font-variant-numeric: tabular-nums;
+      box-shadow: var(--shadow-sm);
+      transition: background .35s var(--ease), transform .35s var(--ease);
+      justify-self: end;
+    }
+    .bar-row:hover .bar-pct {
+      background: var(--green-400);
+      transform: scale(1.08);
     }
 
     /* SKILLS - rings */
@@ -1133,7 +1099,7 @@ const languages = [
       gap: 14px;
       padding: 26px 14px;
       border-radius: var(--radius);
-      background: var(--white);
+      background: var(--off-white);
       border: 1px solid var(--line);
       transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
       position: relative;
@@ -1198,7 +1164,7 @@ const languages = [
     .timeline-dot {
       width: 12px; height: 12px;
       border-radius: 50%;
-      background: var(--white);
+      background: var(--off-white);
       border: 2px solid var(--green-500);
       margin-top: 6px;
       z-index: 1;
@@ -1221,8 +1187,8 @@ const languages = [
     .timeline-period {
       font-size: 12.5px;
       font-weight: 600;
-      color: var(--green-600);
-      background: rgba(35,144,106,0.1);
+      color: var(--green-400);
+      background: rgba(51,181,134,0.12);
       padding: 5px 12px;
       border-radius: 999px;
       white-space: nowrap;
@@ -1255,14 +1221,14 @@ const languages = [
       background: var(--green-400);
     }
     /* experience section runs on a dark charcoal bg (.section--dark) */
-    .section--dark .timeline-rail::before { background: rgba(255,255,255,0.14); }
-    .section--dark .timeline-dot { background: var(--charcoal); border-color: var(--green-400); }
-    .section--dark .timeline-dot.is-current { background: var(--green-400); box-shadow: 0 0 0 5px rgba(51,181,134,0.18); }
-    .section--dark .timeline-top h3 { color: #fff; }
-    .section--dark .timeline-period { color: var(--green-300); background: rgba(255,255,255,0.08); }
-    .section--dark .timeline-role { color: rgba(255,255,255,0.6); }
-    .section--dark .timeline-points li { color: rgba(255,255,255,0.5); }
-    .section--dark .timeline-points li::before { background: var(--green-400); }
+    .section--dark2 .timeline-rail::before { background: rgba(255,255,255,0.14); }
+    .section--dark2 .timeline-dot { background: var(--charcoal-soft); border-color: var(--green-400); }
+    .section--dark2 .timeline-dot.is-current { background: var(--green-400); box-shadow: 0 0 0 5px rgba(51,181,134,0.18); }
+    .section--dark2 .timeline-top h3 { color: #fff; }
+    .section--dark2 .timeline-period { color: var(--green-300); background: rgba(255,255,255,0.08); }
+    .section--dark2 .timeline-role { color: rgba(255,255,255,0.6); }
+    .section--dark2 .timeline-points li { color: rgba(255,255,255,0.5); }
+    .section--dark2 .timeline-points li::before { background: var(--green-400); }
 
     /* GEAR */
     .gear-grid {
@@ -1335,7 +1301,7 @@ const languages = [
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--line);
-      background: var(--white);
+      background: var(--off-white);
       transform-style: preserve-3d;
       transition: box-shadow .4s var(--ease), border-color .4s var(--ease);
     }
@@ -1385,7 +1351,7 @@ const languages = [
     }
     .project-card:hover .project-arrow {
       transform: translate(3px, -3px);
-      color: var(--green-600);
+      color: var(--green-400);
     }
     .project-body p {
       margin-top: 10px;
@@ -1402,8 +1368,8 @@ const languages = [
     .project-tags span {
       font-size: 11.5px;
       font-weight: 600;
-      color: var(--green-700);
-      background: rgba(35,144,106,0.1);
+      color: var(--green-400);
+      background: rgba(51,181,134,0.12);
       padding: 4px 10px;
       border-radius: 6px;
     }
@@ -1419,7 +1385,7 @@ const languages = [
       margin-top: 30px;
       padding: 26px;
       border-radius: var(--radius);
-      background: var(--white);
+      background: var(--off-white);
       border: 1px solid var(--line);
     }
     .edu-block h3 { font-size: 17px; }
@@ -1429,7 +1395,7 @@ const languages = [
       margin-top: 14px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--green-600);
+      color: var(--green-400);
     }
     .cert-list {
       margin-top: 26px;
@@ -1564,7 +1530,7 @@ const languages = [
       .gear-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 8px; }
-      .bar-pct { text-align: left; }
+      .bar-pct { justify-self: start; }
     }
   </style>
 </body>
