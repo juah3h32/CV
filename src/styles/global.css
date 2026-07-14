@@ -24,6 +24,8 @@
   --ink: #0d1210;
   --ink-soft: #4a5550;
   --ink-faint: #8b9691;
+  --charcoal: #121412;
+  --charcoal-soft: #1b1d1b;
   --green-950: #071f1b;
   --green-900: #0b2e28;
   --green-800: #0f3d35;
@@ -143,6 +145,33 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-top: 18px;
   font-size: 17px;
   color: var(--ink-soft);
+}
+
+/* section color variants — break the white scroll every few sections */
+.section--gray { background: var(--off-white); }
+.section--gray .ghost-num { color: rgba(13, 18, 16, 0.055); }
+
+.section--dark,
+.section--brand-dark {
+  color: rgba(255, 255, 255, 0.82);
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+.section--dark { background: var(--charcoal); }
+.section--brand-dark { background: var(--green-950); }
+.section--dark .eyebrow,
+.section--brand-dark .eyebrow { color: var(--green-400); }
+.section--dark .eyebrow::before,
+.section--brand-dark .eyebrow::before { background: var(--green-400); }
+.section--dark h2,
+.section--brand-dark h2 { color: #fff; }
+.section--dark .section-head p,
+.section--brand-dark .section-head p { color: rgba(255, 255, 255, 0.55); }
+.section--dark .ghost-num { color: rgba(255, 255, 255, 0.045); }
+.section--brand-dark .ghost-num { color: rgba(255, 255, 255, 0.05); }
+.section--dark .section-num,
+.section--brand-dark .section-num {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .btn {

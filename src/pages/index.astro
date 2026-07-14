@@ -71,27 +71,27 @@ const aiRings = [
 
 const experience = [
   {
-    company: 'SurCasas',
-    role: 'Desarrollador Web & Marketing Digital',
+    company: 'Grupo Ortiz',
+    role: 'Marketing Digital & Desarrollo Web',
     period: '2025 — Presente',
     current: true,
+    points: [
+      'Desarrollo de páginas web corporativas.',
+      'Creación de animaciones y efectos interactivos.',
+      'Diseño UI/UX y optimización para dispositivos móviles.',
+      'Producción audiovisual y fotografía de productos.',
+    ],
+  },
+  {
+    company: 'SurCasas',
+    role: 'Desarrollador Web & Marketing Digital',
+    period: '2024 — 2025',
     points: [
       'Desarrollo y mantenimiento del sitio web y landing pages.',
       'Optimización SEO y mejora de rendimiento.',
       'Diseño de interfaces modernas y experiencia de usuario.',
       'Implementación de animaciones y efectos Parallax.',
       'Gestión de campañas digitales y redes sociales.',
-    ],
-  },
-  {
-    company: 'Grupo Ortiz',
-    role: 'Marketing Digital & Desarrollo Web',
-    period: '2023 — 2024',
-    points: [
-      'Desarrollo de páginas web corporativas.',
-      'Creación de animaciones y efectos interactivos.',
-      'Diseño UI/UX y optimización para dispositivos móviles.',
-      'Producción audiovisual y fotografía de productos.',
     ],
   },
   {
@@ -284,7 +284,7 @@ const languages = [
     </section>
 
     <!-- SKILLS -->
-    <section class="section skills" id="skills">
+    <section class="section skills section--gray" id="skills">
       <span class="ghost-num" aria-hidden="true">02</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -352,7 +352,7 @@ const languages = [
     </section>
 
     <!-- EXPERIENCE -->
-    <section class="section experience" id="experience">
+    <section class="section experience section--dark" id="experience">
       <span class="ghost-num" aria-hidden="true">03</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -385,7 +385,7 @@ const languages = [
     </section>
 
     <!-- GEAR -->
-    <section class="section gear" id="gear">
+    <section class="section gear section--brand-dark" id="gear">
       <span class="ghost-num" aria-hidden="true">04</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -443,7 +443,7 @@ const languages = [
     </section>
 
     <!-- EDUCATION / CERTS -->
-    <section class="section education" id="education">
+    <section class="section education section--gray" id="education">
       <span class="ghost-num" aria-hidden="true">06</span>
       <div class="wrap education-inner">
         <div data-reveal>
@@ -1011,7 +1011,8 @@ const languages = [
     .bar-track {
       height: 8px;
       border-radius: 999px;
-      background: var(--panel);
+      background: var(--white);
+      border: 1px solid var(--line);
       overflow: hidden;
     }
     .bar-fill {
@@ -1042,7 +1043,7 @@ const languages = [
       gap: 14px;
       padding: 26px 14px;
       border-radius: var(--radius);
-      background: var(--off-white);
+      background: var(--white);
       border: 1px solid var(--line);
       transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
       position: relative;
@@ -1163,6 +1164,15 @@ const languages = [
       border-radius: 50%;
       background: var(--green-400);
     }
+    /* experience section runs on a dark charcoal bg (.section--dark) */
+    .section--dark .timeline-rail::before { background: rgba(255,255,255,0.14); }
+    .section--dark .timeline-dot { background: var(--charcoal); border-color: var(--green-400); }
+    .section--dark .timeline-dot.is-current { background: var(--green-400); box-shadow: 0 0 0 5px rgba(51,181,134,0.18); }
+    .section--dark .timeline-top h3 { color: #fff; }
+    .section--dark .timeline-period { color: var(--green-300); background: rgba(255,255,255,0.08); }
+    .section--dark .timeline-role { color: rgba(255,255,255,0.6); }
+    .section--dark .timeline-points li { color: rgba(255,255,255,0.5); }
+    .section--dark .timeline-points li::before { background: var(--green-400); }
 
     /* GEAR */
     .gear-grid {
@@ -1173,12 +1183,15 @@ const languages = [
     .gear-card {
       padding: 30px 26px;
       border-radius: var(--radius);
-      background: var(--green-950);
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.09);
       color: #fff;
-      transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
     }
     .gear-card:hover {
       transform: translateY(-6px);
+      background: rgba(255,255,255,0.075);
+      border-color: rgba(255,255,255,0.18);
       box-shadow: var(--shadow-lg);
     }
     .gear-card:hover .gear-icon {
@@ -1316,7 +1329,7 @@ const languages = [
       margin-top: 30px;
       padding: 26px;
       border-radius: var(--radius);
-      background: var(--off-white);
+      background: var(--white);
       border: 1px solid var(--line);
     }
     .edu-block h3 { font-size: 17px; }
