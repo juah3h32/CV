@@ -190,18 +190,22 @@ const projects = [
     image: '/images/projects/naturizable.jpg',
   },
   {
-    name: 'portafoliojuanpa.com',
-    desc: 'Portafolio personal donde muestro proyectos web, diseño y producción audiovisual.',
+    name: 'hotelpuntagaleria.mx',
+    desc: 'Sitio web para hotel con galería visual, información de habitaciones y experiencia de marca inmersiva.',
     tags: ['HTML', 'CSS', 'JS'],
-    url: 'https://portafoliojuanpa.com',
-    image: '/images/projects/portafoliojuanpa.jpg',
+    url: 'https://hotelpuntagaleria.mx/',
+    // live thumbnail service — no local screenshot file needed for this one
+    image: 'https://image.thum.io/get/width/900/https://hotelpuntagaleria.mx/',
   },
 ];
 
 // astro:assets needs static, literal import paths to optimize a file, so at
 // build time we just check whether the file actually landed on disk yet —
 // no image means we fall back to the gradient placeholder instead of a 404.
+// Remote (http/https) images skip this check — the browser loads those
+// directly at runtime, there's nothing on disk to verify.
 for (const p of projects) {
+  if (p.image?.startsWith('http')) continue;
   const onDisk = fs.existsSync(new URL('../../public' + p.image, import.meta.url));
   if (!onDisk) delete (p as any).image;
 }
@@ -467,7 +471,7 @@ const languages = [
     </section>
 
     <!-- GEAR -->
-    <section class="section gear section--brand-dark" id="gear" style="z-index:40;">
+    <section class="section gear section--brand-dark no-stack" id="gear" style="z-index:40;">
       <span class="ghost-num" aria-hidden="true">04</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -476,9 +480,12 @@ const languages = [
           <h2>Equipo profesional</h2>
           <p>Fotografía de producto y video de alta calidad, de la captura a la edición final.</p>
         </div>
-        <div class="gear-grid">
-          {gear.map((g) => (
-            <div class="gear-card" data-reveal>
+      </div>
+
+      <div class="gear-marquee">
+        <div class="gear-track">
+          {[...gear, ...gear].map((g, i) => (
+            <div class="gear-card" aria-hidden={i >= gear.length ? 'true' : undefined}>
               <div class="gear-card-top">
                 <span class="gear-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
@@ -1491,12 +1498,25 @@ const languages = [
     .section--dark2 .timeline-points li::before { background: var(--green-400); }
 
     /* GEAR */
-    .gear-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+    .gear-marquee {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 60px;
+      padding: 8px 0 4px;
+      mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
     }
+    .gear-track {
+      display: flex;
+      width: max-content;
+      gap: 22px;
+      animation: marquee-scroll 34s linear infinite;
+    }
+    .gear-marquee:hover .gear-track { animation-play-state: paused; }
     .gear-card {
+      width: 280px;
+      flex-shrink: 0;
       padding: 28px 26px;
       border-radius: var(--radius);
       background: rgba(255,255,255,0.045);
@@ -1853,7 +1873,6 @@ const languages = [
 
     @media (max-width: 1000px) {
       .about-inner, .education-inner, .tools-columns { grid-template-columns: 1fr; gap: 48px; }
-      .gear-grid { grid-template-columns: repeat(2, 1fr); }
       .project-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 160px 1fr 44px; gap: 12px; }
       .contact-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1864,7 +1883,6 @@ const languages = [
     }
     @media (max-width: 760px) {
       .stat-grid { grid-template-columns: 1fr 1fr; }
-      .gear-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 8px; }
       .bar-pct { justify-self: start; }
