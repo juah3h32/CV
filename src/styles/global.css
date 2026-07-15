@@ -114,6 +114,13 @@ ul { list-style: none; margin: 0; padding: 0; }
   border-top: 1px solid var(--line);
   overflow: clip;
 }
+/* position:sticky only reads well when a section's content fits within
+   one viewport — taller sections (Skills, Experience) would stay pinned
+   at their top while everything past the fold never gets a chance to
+   scroll into view, so they opt out and scroll normally instead. */
+.section.no-stack {
+  position: relative;
+}
 .ghost-num {
   position: absolute;
   top: 66px;

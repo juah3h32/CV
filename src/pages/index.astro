@@ -303,7 +303,7 @@ const languages = [
     </section>
 
     <!-- SKILLS -->
-    <section class="section skills section--dark" id="skills" style="z-index:20;">
+    <section class="section skills section--dark no-stack" id="skills" style="z-index:20;">
       <span class="ghost-num" aria-hidden="true">02</span>
 
       <div class="marquee">
@@ -344,54 +344,52 @@ const languages = [
           ))}
         </div>
 
-        <div class="section-head" data-reveal style="margin-top:110px;">
-          <p class="eyebrow">Habilidades técnicas</p>
-          <h2>Lo que sé construir</h2>
-          <p>Un vistazo circular a mis competencias de desarrollo web y diseño de producto.</p>
-        </div>
-
-        <div class="rings-grid">
-          {techRings.map((r) => (
-            <div class="ring-card" data-reveal>
-              <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
-              </span>
-              <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-              </svg>
-              <span class="ring-value" data-ring-value>0%</span>
-              <p class="ring-name">{r.name}</p>
+        <div class="tools-columns">
+          <div class="tools-col" data-reveal>
+            <p class="eyebrow">Habilidades técnicas</p>
+            <h3>Lo que sé construir</h3>
+            <div class="rings-grid rings-grid-compact">
+              {techRings.map((r) => (
+                <div class="ring-card">
+                  <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
+                  </span>
+                  <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
+                    <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <span class="ring-value" data-ring-value>0%</span>
+                  <p class="ring-name">{r.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div class="section-head" data-reveal style="margin-top:110px;">
-          <p class="eyebrow">Inteligencia artificial &amp; automatización</p>
-          <h2>IA aplicada al trabajo real</h2>
-          <p>Uso IA y automatización para acelerar producción de contenido, código y flujos de trabajo.</p>
-        </div>
-
-        <div class="rings-grid rings-grid-ai">
-          {aiRings.map((r) => (
-            <div class="ring-card" data-reveal>
-              <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
-              </span>
-              <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-              </svg>
-              <span class="ring-value" data-ring-value>0%</span>
-              <p class="ring-name">{r.name}</p>
+          <div class="tools-col" data-reveal>
+            <p class="eyebrow">IA &amp; automatización</p>
+            <h3>IA aplicada al trabajo real</h3>
+            <div class="rings-grid rings-grid-compact">
+              {aiRings.map((r) => (
+                <div class="ring-card">
+                  <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
+                  </span>
+                  <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
+                    <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <span class="ring-value" data-ring-value>0%</span>
+                  <p class="ring-name">{r.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
 
     <!-- EXPERIENCE -->
-    <section class="section experience section--dark2" id="experience" style="z-index:30;">
+    <section class="section experience section--dark2 no-stack" id="experience" style="z-index:30;">
       <span class="ghost-num" aria-hidden="true">03</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -1190,7 +1188,22 @@ const languages = [
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 28px;
     }
-    .rings-grid-ai { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .tools-columns {
+      margin-top: 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .tools-col h3 {
+      font-size: clamp(22px, 2.6vw, 30px);
+      margin-top: 12px;
+      margin-bottom: 26px;
+    }
+    .rings-grid-compact {
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 18px;
+    }
     .ring-card {
       display: flex;
       flex-direction: column;
@@ -1628,7 +1641,7 @@ const languages = [
     }
 
     @media (max-width: 1000px) {
-      .about-inner, .education-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-inner, .education-inner, .tools-columns { grid-template-columns: 1fr; gap: 48px; }
       .gear-grid { grid-template-columns: repeat(2, 1fr); }
       .project-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 160px 1fr 44px; gap: 12px; }
