@@ -354,11 +354,13 @@ const languages = [
                   <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
                   </span>
-                  <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                    <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                    <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-                  </svg>
-                  <span class="ring-value" data-ring-value>0%</span>
+                  <span class="ring-wrap">
+                    <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
+                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                      <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <span class="ring-value" data-ring-value>0%</span>
+                  </span>
                   <p class="ring-name">{r.name}</p>
                 </div>
               ))}
@@ -374,11 +376,13 @@ const languages = [
                   <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
                   </span>
-                  <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                    <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                    <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-                  </svg>
-                  <span class="ring-value" data-ring-value>0%</span>
+                  <span class="ring-wrap">
+                    <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
+                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                      <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <span class="ring-value" data-ring-value>0%</span>
+                  </span>
                   <p class="ring-name">{r.name}</p>
                 </div>
               ))}
@@ -1232,7 +1236,15 @@ const languages = [
       box-shadow: var(--shadow-md);
       border-color: var(--green-400);
     }
-    .ring-svg { width: 96px; height: 96px; transform: rotate(-90deg); }
+    .ring-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 96px;
+      height: 96px;
+    }
+    .ring-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
     .ring-track {
       fill: none;
       stroke: var(--line);
@@ -1246,12 +1258,13 @@ const languages = [
       stroke-linecap: round;
     }
     .ring-value {
-      position: absolute;
-      top: 58px;
+      position: relative;
+      z-index: 1;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 17px;
-      color: var(--ink);
+      font-size: 22px;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
     }
     .ring-name {
       font-size: 13.5px;
