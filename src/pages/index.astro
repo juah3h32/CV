@@ -33,6 +33,8 @@ const icons: Record<string, string> = {
   search: '<circle cx="10" cy="10" r="6"/><line x1="15" y1="15" x2="21" y2="21"/>',
   layers: '<polyline points="12,3 21,8 12,13 3,8 12,3"/><polyline points="3,13 12,18 21,13"/>',
   chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><line x1="9" y1="2" x2="9" y2="6"/><line x1="15" y1="2" x2="15" y2="6"/><line x1="9" y1="18" x2="9" y2="22"/><line x1="15" y1="18" x2="15" y2="22"/><line x1="2" y1="9" x2="6" y2="9"/><line x1="2" y1="15" x2="6" y2="15"/><line x1="18" y1="9" x2="22" y2="9"/><line x1="18" y1="15" x2="22" y2="15"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="7" y2="7"/><line x1="17" y1="17" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="7" y2="17"/><line x1="17" y1="7" x2="19.1" y2="4.9"/>',
+  moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
 };
 
 const nav = [
@@ -154,7 +156,7 @@ const experience = [
 ];
 
 const gear = [
-  { title: 'Cámaras', icon: 'camera', items: ['Sony A7III', 'Sony A6400', 'Canon 80D'] },
+  { title: 'Cámaras', icon: 'camera', items: ['Sony FX3', 'Sony A7III', 'Sony A7CR', 'Sony ZV-10', 'DJI Osmo Action'] },
   { title: 'Lentes', icon: 'aperture', items: ['24–70mm f/2.8', '50mm f/1.8', 'Sigma 18–35mm f/1.8'] },
   { title: 'Drones', icon: 'drone', items: ['DJI Mavic Air 2', 'DJI Mini 2'] },
   { title: 'Iluminación', icon: 'light', items: ['Godox SL60W', 'Softbox', 'Reflectores LED'] },
@@ -225,6 +227,12 @@ const languages = [
   <meta name="description" content="Juan Pablo Corona Corona — Frontend Web Developer & UI/UX Designer. Desarrollo web, animaciones, diseño y producción audiovisual." />
   <title>Juan Pablo Corona — Frontend Developer & UI/UX Designer</title>
   <link rel="icon" type="image/jpeg" href="/images/profile.jpeg" />
+  <script is:inline>
+    // Runs before paint so the theme is correct on first frame, no flash.
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  </script>
 </head>
 <body>
 
@@ -238,6 +246,10 @@ const languages = [
           <a href={item.href} data-nav>{item.label}</a>
         ))}
       </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.sun} />
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.moon} />
+      </button>
       <div class="nav-cta">
         <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-ghost btn-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
@@ -467,13 +479,16 @@ const languages = [
         <div class="gear-grid">
           {gear.map((g) => (
             <div class="gear-card" data-reveal>
-              <span class="gear-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
-              </span>
+              <div class="gear-card-top">
+                <span class="gear-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
+                </span>
+                <span class="gear-count">{g.items.length}</span>
+              </div>
               <h3>{g.title}</h3>
-              <ul>
-                {g.items.map((i) => <li>{i}</li>)}
-              </ul>
+              <div class="gear-chips">
+                {g.items.map((i) => <span>{i}</span>)}
+              </div>
             </div>
           ))}
         </div>
@@ -639,6 +654,19 @@ const languages = [
         navToggle?.classList.remove('is-open');
       })
     );
+
+    // Light/dark theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle?.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+    });
 
     // Active nav link highlight
     const setActive = (id) => {
@@ -816,10 +844,10 @@ const languages = [
       top: 0; left: 0; width: 100%;
       z-index: 100;
       padding: 20px 0;
-      background: rgba(22, 24, 26, 0.7);
+      background: var(--nav-bg);
       backdrop-filter: blur(14px) saturate(160%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: padding .4s var(--ease), box-shadow .4s var(--ease);
+      border-bottom: 1px solid var(--line);
+      transition: padding .4s var(--ease), box-shadow .4s var(--ease), background .3s ease, border-color .3s ease;
     }
     .nav.is-scrolled {
       padding: 13px 0;
@@ -837,7 +865,8 @@ const languages = [
       font-size: 18px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #fff;
+      color: var(--nav-text);
+      transition: color .3s ease;
     }
     .brand span { color: var(--green-400); }
     .nav-links {
@@ -849,7 +878,7 @@ const languages = [
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.55);
+      color: var(--nav-text-soft);
       position: relative;
       padding: 4px 0;
       transition: color .3s ease;
@@ -862,9 +891,32 @@ const languages = [
       background: var(--green-400);
       transition: width .35s var(--ease);
     }
-    .nav-links a:hover, .nav-links a.is-active { color: #fff; }
+    .nav-links a:hover, .nav-links a.is-active { color: var(--nav-text); }
     .nav-links a:hover::after, .nav-links a.is-active::after { width: 100%; }
     .btn-sm { padding: 10px 20px; font-size: 13px; }
+    .theme-toggle {
+      position: relative;
+      width: 38px; height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      color: var(--nav-text);
+      flex-shrink: 0;
+      transition: border-color .3s ease, background .3s ease, transform .3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--green-400); transform: translateY(-2px); }
+    .theme-toggle svg {
+      position: absolute;
+      width: 17px; height: 17px;
+      transition: opacity .35s ease, transform .5s var(--ease);
+    }
+    .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+    .icon-sun { opacity: 0; transform: rotate(-60deg) scale(0.5); }
+    :root[data-theme='light'] .icon-moon { opacity: 0; transform: rotate(60deg) scale(0.5); }
+    :root[data-theme='light'] .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
     .nav-toggle {
       display: none;
       flex-direction: column;
@@ -875,8 +927,8 @@ const languages = [
     }
     .nav-toggle span {
       width: 22px; height: 2px;
-      background: #fff;
-      transition: transform .3s ease, opacity .3s ease;
+      background: var(--nav-text);
+      transition: transform .3s ease, opacity .3s ease, background .3s ease;
     }
 
     @media (max-width: 760px) {
@@ -937,7 +989,7 @@ const languages = [
     .hero-name {
       font-size: clamp(42px, 6vw, 72px);
       line-height: 1.02;
-      color: #fff;
+      color: var(--ink);
       margin-top: 20px;
     }
     .hero-social {
@@ -1025,7 +1077,7 @@ const languages = [
       aspect-ratio: 1;
       border-radius: 50%;
       overflow: hidden;
-      border: 4px solid rgba(255, 255, 255, 0.85);
+      border: 4px solid var(--charcoal);
       box-shadow: var(--shadow-lg);
       z-index: 1;
     }
@@ -1303,7 +1355,7 @@ const languages = [
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 22px;
-      color: #fff;
+      color: var(--ink);
       font-variant-numeric: tabular-nums;
     }
     .ring-name {
@@ -1445,7 +1497,7 @@ const languages = [
       gap: 22px;
     }
     .gear-card {
-      padding: 30px 26px;
+      padding: 28px 26px;
       border-radius: var(--radius);
       background: rgba(255,255,255,0.045);
       border: 1px solid rgba(255,255,255,0.09);
@@ -1459,43 +1511,61 @@ const languages = [
       box-shadow: var(--shadow-lg);
     }
     .gear-card:hover .gear-icon {
-      background: var(--green-400);
+      background: var(--green-400-fixed);
       color: var(--green-950);
+      transform: scale(1.08) rotate(-4deg);
+    }
+    .gear-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .gear-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 42px; height: 42px;
-      border-radius: 10px;
+      width: 44px; height: 44px;
+      border-radius: 12px;
       background: rgba(255,255,255,0.08);
-      color: var(--green-300);
-      margin-bottom: 20px;
-      transition: background .35s var(--ease), color .35s var(--ease);
+      color: var(--green-300-fixed);
+      transition: background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
     }
     .gear-icon svg { width: 21px; height: 21px; }
-    .gear-card h3 {
-      font-size: 17px;
-      color: var(--green-300);
+    .gear-count {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      width: 26px; height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .gear-card ul {
+    .gear-card h3 {
+      margin-top: 22px;
+      font-size: 18px;
+      color: var(--green-300-fixed);
+    }
+    .gear-chips {
       margin-top: 16px;
       display: flex;
-      flex-direction: column;
-      gap: 9px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
-    .gear-card li {
-      font-size: 15px;
+    .gear-chips span {
+      font-size: 12.5px;
+      font-weight: 500;
       color: rgba(255,255,255,0.82);
-      padding-left: 16px;
-      position: relative;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 12px;
+      border-radius: 999px;
+      transition: background .3s ease, border-color .3s ease;
     }
-    .gear-card li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px;
-      width: 5px; height: 5px;
-      background: var(--green-400);
+    .gear-card:hover .gear-chips span {
+      border-color: rgba(51,181,134,0.35);
     }
 
     /* PROJECTS */
@@ -1702,8 +1772,8 @@ const languages = [
       width: 50%; height: 140%;
       background: radial-gradient(circle, rgba(51,181,134,0.22), transparent 70%);
     }
-    .contact-card .eyebrow { color: var(--green-300); }
-    .contact-card .eyebrow::before { background: var(--green-300); }
+    .contact-card .eyebrow { color: var(--green-300-fixed); }
+    .contact-card .eyebrow::before { background: var(--green-300-fixed); }
     .contact-card h2 {
       font-size: clamp(34px, 5vw, 56px);
       margin-top: 16px;
@@ -1711,7 +1781,7 @@ const languages = [
     }
     .contact-card h2 em {
       font-style: normal;
-      color: var(--green-300);
+      color: var(--green-300-fixed);
     }
     .contact-lead {
       margin-top: 18px;
@@ -1731,7 +1801,7 @@ const languages = [
       padding-bottom: 4px;
       transition: color .3s ease, border-color .3s ease;
     }
-    .contact-email:hover { color: var(--green-300); border-color: var(--green-300); }
+    .contact-email:hover { color: var(--green-300-fixed); border-color: var(--green-300-fixed); }
     .contact-grid {
       position: relative;
       margin-top: 56px;
@@ -1753,7 +1823,7 @@ const languages = [
     a.contact-item:hover { background: rgba(255,255,255,0.08); }
     .contact-icon {
       width: 18px; height: 18px;
-      color: var(--green-400);
+      color: var(--green-400-fixed);
       margin-bottom: 4px;
     }
     .contact-k {
