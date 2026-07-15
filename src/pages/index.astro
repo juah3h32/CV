@@ -374,19 +374,17 @@ const languages = [
           <p>Del retoque fotográfico a la edición de video y el diseño de interfaces — mi caja de herramientas creativa.</p>
         </div>
 
-        <div class="bars">
+        <div class="tool-grid">
           {toolBars.map((t) => (
-            <div class="bar-row">
-              <div class="bar-label">
-                <span class="bar-tag" aria-label={t.tag} style={`background:${t.bg}; color:${t.fg};`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-                </span>
-                <span>{t.name}</span>
+            <div class="tool-tile">
+              <span class="tool-tile-pct" data-pct-label={t.pct}>0%</span>
+              <span class="tool-tile-icon" style={`background:${t.bg}; color:${t.fg};`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
+              </span>
+              <span class="tool-tile-name">{t.name}</span>
+              <div class="tool-tile-track">
+                <div class="tool-tile-fill" data-pct={t.pct}></div>
               </div>
-              <div class="bar-track">
-                <div class="bar-fill" data-pct={t.pct}></div>
-              </div>
-              <span class="bar-pct" data-pct-label={t.pct}>0%</span>
             </div>
           ))}
         </div>
@@ -754,6 +752,30 @@ const languages = [
       const obj = { val: 0 };
       ScrollTrigger.create({
         trigger: row,
+        start: 'top 88%',
+        once: true,
+        onEnter: () => {
+          gsap.to(fill, { width: pct + '%', duration: 1.3, ease: 'power3.out' });
+          gsap.to(obj, {
+            val: pct,
+            duration: 1.3,
+            ease: 'power3.out',
+            onUpdate: () => {
+              if (label) label.textContent = Math.round(obj.val) + '%';
+            },
+          });
+        },
+      });
+    });
+
+    // Animated tool tiles
+    document.querySelectorAll('.tool-tile').forEach((tile) => {
+      const fill = tile.querySelector('.tool-tile-fill');
+      const label = tile.querySelector('[data-pct-label]');
+      const pct = parseFloat(fill?.getAttribute('data-pct') || '0');
+      const obj = { val: 0 };
+      ScrollTrigger.create({
+        trigger: tile,
         start: 'top 88%',
         once: true,
         onEnter: () => {
@@ -1222,6 +1244,70 @@ const languages = [
     }
     @media (prefers-reduced-motion: reduce) {
       .marquee-track { animation: none; }
+    }
+
+    /* SKILLS - tool tiles ("Software que domino a diario") */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 18px;
+    }
+    .tool-tile {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 30px 16px 20px;
+      border-radius: var(--radius);
+      background: var(--off-white);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+    }
+    .tool-tile:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--green-400);
+    }
+    .tool-tile-pct {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      color: var(--ink-faint);
+      font-variant-numeric: tabular-nums;
+    }
+    .tool-tile-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform .4s var(--ease);
+    }
+    .tool-tile-icon svg { width: 25px; height: 25px; }
+    .tool-tile:hover .tool-tile-icon { transform: scale(1.08) rotate(-3deg); }
+    .tool-tile-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: center;
+    }
+    .tool-tile-track {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+      margin-top: 2px;
+    }
+    .tool-tile-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green-600), var(--green-400));
     }
 
     /* SKILLS - bars */
