@@ -209,9 +209,12 @@ const projects = [
 // for photos, public/images/projects/ + a poster frame for video). Each
 // renders as an empty upload-style placeholder until an `image` is added.
 const photoItems = [
-  { name: 'Fotografía de producto', desc: 'Sesión de producto — agrega tus fotos aquí.' },
-  { name: 'Fotografía de producto', desc: 'Sesión de producto — agrega tus fotos aquí.' },
-  { name: 'Fotografía de producto', desc: 'Sesión de producto — agrega tus fotos aquí.' },
+  { name: 'Papas fritas', desc: 'Fotografía de producto — sesión de comida.', image: '/images/photography/papas-ketchup.jpg' },
+  { name: 'Empaque Naturizable', desc: 'Fotografía de producto — packaging biodegradable.', image: '/images/photography/empaque-naturizable.jpg' },
+  { name: 'Papas y tiras de pollo', desc: 'Fotografía de producto — sesión de comida.', image: '/images/photography/papas-alitas.jpg' },
+  { name: 'Charolas Naturizable', desc: 'Fotografía de producto — packaging biodegradable.', image: '/images/photography/charolas-stack.jpg' },
+  { name: 'Charola biodegradable', desc: 'Fotografía de producto — packaging Naturizable.', image: '/images/photography/charola-plana.jpg' },
+  { name: 'Charola Naturizable', desc: 'Fotografía de producto — en uso.', image: '/images/photography/charola-mano.jpg' },
 ];
 const videoItems = [
   { name: 'Edición de video', desc: 'Video editado — agrega tu clip o miniatura aquí.' },
@@ -566,15 +569,27 @@ const languages = [
           ))}
 
           {photoItems.map((p) => (
-            <div class="project-card project-card--empty" data-category="foto" style="display:none;">
-              <div class="project-empty-slot">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons.image} />
+            p.image ? (
+              <a class="project-card" data-category="foto" href={p.image} target="_blank" rel="noopener noreferrer" style="display:none;">
+                <div class="project-thumb has-image project-thumb--media">
+                  <img class="project-thumb-img" src={p.image} alt={p.name} loading="lazy" />
+                </div>
+                <div class="project-body">
+                  <h3>{p.name}</h3>
+                  <p>{p.desc}</p>
+                </div>
+              </a>
+            ) : (
+              <div class="project-card project-card--empty" data-category="foto" style="display:none;">
+                <div class="project-empty-slot">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons.image} />
+                </div>
+                <div class="project-body">
+                  <h3>{p.name}</h3>
+                  <p>{p.desc}</p>
+                </div>
               </div>
-              <div class="project-body">
-                <h3>{p.name}</h3>
-                <p>{p.desc}</p>
-              </div>
-            </div>
+            )
           ))}
 
           {videoItems.map((v) => (
@@ -1816,6 +1831,7 @@ const languages = [
       overflow: hidden;
       background: var(--charcoal-soft);
     }
+    .project-thumb--media { height: 190px; }
     .project-thumb-img {
       position: absolute;
       inset: 0;
