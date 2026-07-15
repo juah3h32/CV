@@ -61,8 +61,8 @@ body {
   background: var(--charcoal);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.6;
   /* overflow-x: hidden would force overflow-y to compute as "auto" per the
      CSS2.1 pairing rule, turning body into a scroll container and silently
      breaking position:sticky in every descendant section. overflow-x: clip
@@ -73,8 +73,11 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: -0.005em;
-  line-height: 0.98;
+  /* uppercase display type needs *positive* tracking, not negative —
+     negative letter-spacing on all-caps heavy weights reads as cramped
+     and letters can visually touch */
+  letter-spacing: 0.015em;
+  line-height: 1.08;
   font-weight: 800;
 }
 p { margin: 0; }
