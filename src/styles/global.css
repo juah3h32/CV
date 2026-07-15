@@ -63,7 +63,11 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
-  overflow-x: hidden;
+  /* overflow-x: hidden would force overflow-y to compute as "auto" per the
+     CSS2.1 pairing rule, turning body into a scroll container and silently
+     breaking position:sticky in every descendant section. overflow-x: clip
+     blocks horizontal scroll without that side effect. */
+  overflow-x: clip;
 }
 h1, h2, h3, h4 {
   font-family: var(--font-display);
@@ -104,7 +108,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .section {
-  position: relative;
+  position: sticky;
+  top: 0;
   padding: 140px 0;
   border-top: 1px solid var(--line);
   overflow: clip;
