@@ -182,14 +182,14 @@ const projects = [
     desc: 'Sitio corporativo con diseño moderno, animaciones Parallax y enfoque en rendimiento.',
     tags: ['HTML', 'CSS', 'JS', 'GSAP'],
     url: 'https://grupo-ortiz.com',
-    image: '/images/projects/grupo-ortiz.jpg',
+    image: 'https://image.thum.io/get/width/900/https://grupo-ortiz.com',
   },
   {
     name: 'naturizable.com',
     desc: 'Sitio de productos naturales con diseño UI/UX, animaciones suaves y optimización de SEO.',
     tags: ['HTML', 'CSS', 'JS'],
     url: 'https://naturizable.com',
-    image: '/images/projects/naturizable.jpg',
+    image: 'https://image.thum.io/get/width/900/https://naturizable.com',
   },
   {
     name: 'hotelpuntagaleria.mx',
@@ -1595,10 +1595,11 @@ const languages = [
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 20px;
     }
     .project-card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--line);
@@ -1611,12 +1612,13 @@ const languages = [
       border-color: var(--green-400);
     }
     .project-thumb {
-      height: 170px;
+      height: 140px;
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-start;
-      padding: 16px;
+      padding: 14px;
       position: relative;
       overflow: hidden;
       background: var(--charcoal-soft);
@@ -1688,7 +1690,12 @@ const languages = [
       background-image: radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px);
       background-size: 16px 16px;
     }
-    .project-body { padding: 18px 18px 20px; }
+    .project-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 16px 16px 20px;
+    }
     .project-title-row {
       display: flex;
       align-items: center;
@@ -1713,7 +1720,8 @@ const languages = [
       line-height: 1.5;
     }
     .project-tags {
-      margin-top: 14px;
+      margin-top: auto;
+      padding-top: 14px;
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
