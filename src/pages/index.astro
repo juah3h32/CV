@@ -85,6 +85,7 @@ const aiRings = [
 const experience = [
   {
     company: 'Grupo Ortiz',
+    initials: 'GO',
     role: 'Marketing Digital & Desarrollo Web',
     period: '2025 — Presente',
     current: true,
@@ -97,6 +98,7 @@ const experience = [
   },
   {
     company: 'SurCasas',
+    initials: 'SC',
     role: 'Desarrollador Web & Marketing Digital',
     period: '2024 — 2025',
     points: [
@@ -109,6 +111,7 @@ const experience = [
   },
   {
     company: 'Inpower Machine',
+    initials: 'IM',
     role: 'Marketing Digital, Video & Fotografía',
     period: '2023 — 2024',
     points: [
@@ -119,6 +122,7 @@ const experience = [
   },
   {
     company: 'Caja Morelia Valladolid',
+    initials: 'CM',
     role: 'Diseño de interfaces FRONT-END',
     period: '2022',
     points: [
@@ -128,6 +132,7 @@ const experience = [
   },
   {
     company: 'Salinas Graphic',
+    initials: 'SG',
     role: 'Diseño Gráfico en Impresión Física',
     period: '2019 — 2020',
     points: [
@@ -137,6 +142,7 @@ const experience = [
   },
   {
     company: 'APM Publicidad',
+    initials: 'AP',
     role: 'Diseño gráfico digital y publicidad',
     period: '2017 — 2018',
     points: [
@@ -154,6 +160,14 @@ const gear = [
   { title: 'Audio', icon: 'audio', items: ['Rode VideoMic Pro', 'Zoom H1n'] },
   { title: 'Edición', icon: 'edit', items: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'] },
 ];
+
+// Real brand colors for project tag chips, matching the tech-ring badges
+const tagMeta: Record<string, { icon: string; bg: string; fg: string }> = {
+  HTML: { icon: 'brackets', bg: '#E34F26', fg: '#fff' },
+  CSS: { icon: 'droplet', bg: '#1572B6', fg: '#fff' },
+  JS: { icon: 'bolt', bg: '#F7DF1E', fg: '#1a1a1a' },
+  GSAP: { icon: 'sparkle', bg: '#88CE02', fg: '#0b1a00' },
+};
 
 const projects = [
   {
@@ -405,11 +419,12 @@ const languages = [
 
         <div class="timeline">
           {experience.map((job) => (
-            <div class="timeline-item" data-reveal>
+            <div class={`timeline-item ${job.current ? 'is-current' : ''}`} data-reveal>
               <div class="timeline-rail">
-                <span class={`timeline-dot ${job.current ? 'is-current' : ''}`}></span>
+                <span class="timeline-avatar">{job.initials}</span>
               </div>
               <div class="timeline-card">
+                {job.current && <span class="timeline-flag">Actual</span>}
                 <div class="timeline-top">
                   <h3>{job.company}</h3>
                   <span class="timeline-period">{job.period}</span>
@@ -465,7 +480,12 @@ const languages = [
           {projects.map((p, i) => (
             <a class="project-card" href={p.url} target="_blank" rel="noopener noreferrer" data-reveal>
               <div class={`project-thumb thumb-${i + 1}`}>
-                <span>{p.name}</span>
+                <span class="project-index">0{i + 1}</span>
+                <span class="project-thumb-name">{p.name}</span>
+                <span class="project-visit">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.arrow} />
+                  Ver sitio
+                </span>
               </div>
               <div class="project-body">
                 <div class="project-title-row">
@@ -474,7 +494,12 @@ const languages = [
                 </div>
                 <p>{p.desc}</p>
                 <div class="project-tags">
-                  {p.tags.map((t) => <span>{t}</span>)}
+                  {p.tags.map((t) => (
+                    <span style={`background:${tagMeta[t].bg}1a; color:${tagMeta[t].bg};`}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons[tagMeta[t].icon]} />
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </div>
             </a>
@@ -1281,7 +1306,7 @@ const languages = [
     }
     .timeline-item {
       display: grid;
-      grid-template-columns: 32px 1fr;
+      grid-template-columns: 52px 1fr;
       gap: 24px;
     }
     .timeline-rail {
@@ -1292,25 +1317,65 @@ const languages = [
     .timeline-rail::before {
       content: '';
       position: absolute;
-      top: 6px; bottom: -34px;
+      top: 52px; bottom: -28px;
       width: 1px;
       background: var(--line-strong);
     }
     .timeline-item:last-child .timeline-rail::before { display: none; }
-    .timeline-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
+    .timeline-avatar {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--green-300);
       background: var(--off-white);
-      border: 2px solid var(--green-500);
-      margin-top: 6px;
+      border: 1px solid var(--line-strong);
       z-index: 1;
+      transition: transform .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
     }
-    .timeline-dot.is-current {
+    .timeline-item.is-current .timeline-avatar {
       background: var(--green-500);
-      box-shadow: 0 0 0 5px rgba(35,144,106,0.16);
+      color: #fff;
+      border-color: var(--green-400);
+      box-shadow: 0 0 0 6px rgba(51,181,134,0.16);
+    }
+    .timeline-item:hover .timeline-avatar {
+      transform: scale(1.06);
+      border-color: var(--green-400);
     }
     .timeline-card {
-      padding-bottom: 52px;
+      position: relative;
+      padding: 26px 28px 30px;
+      margin-bottom: 24px;
+      border-radius: var(--radius);
+      background: var(--off-white);
+      border: 1px solid var(--line);
+      transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+    }
+    .timeline-item:hover .timeline-card {
+      transform: translateX(6px);
+      border-color: var(--green-400);
+      box-shadow: var(--shadow-md);
+    }
+    .timeline-item.is-current .timeline-card {
+      border-color: rgba(51,181,134,0.4);
+      background: rgba(51,181,134,0.06);
+    }
+    .timeline-flag {
+      position: absolute;
+      top: -11px; right: 24px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--green-500);
+      padding: 4px 12px;
+      border-radius: 999px;
     }
     .timeline-top {
       display: flex;
@@ -1356,14 +1421,6 @@ const languages = [
       border-radius: 50%;
       background: var(--green-400);
     }
-    /* experience section runs on a dark charcoal bg (.section--dark) */
-    .section--dark2 .timeline-rail::before { background: rgba(255,255,255,0.14); }
-    .section--dark2 .timeline-dot { background: var(--charcoal-soft); border-color: var(--green-400); }
-    .section--dark2 .timeline-dot.is-current { background: var(--green-400); box-shadow: 0 0 0 5px rgba(51,181,134,0.18); }
-    .section--dark2 .timeline-top h3 { color: #fff; }
-    .section--dark2 .timeline-period { color: var(--green-300); background: rgba(255,255,255,0.08); }
-    .section--dark2 .timeline-role { color: rgba(255,255,255,0.6); }
-    .section--dark2 .timeline-points li { color: rgba(255,255,255,0.5); }
     .section--dark2 .timeline-points li::before { background: var(--green-400); }
 
     /* GEAR */
@@ -1446,14 +1503,24 @@ const languages = [
       border-color: var(--green-400);
     }
     .project-thumb {
-      height: 190px;
+      height: 210px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 20px;
       position: relative;
       overflow: hidden;
     }
-    .project-thumb span {
+    .project-index {
+      position: absolute;
+      top: 18px; left: 20px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      z-index: 1;
+    }
+    .project-thumb-name {
       font-family: var(--font-display);
       font-weight: 700;
       text-transform: uppercase;
@@ -1461,7 +1528,30 @@ const languages = [
       color: #fff;
       z-index: 1;
       letter-spacing: 0;
+      transition: opacity .35s ease;
     }
+    .project-card:hover .project-thumb-name { opacity: 0; }
+    .project-visit {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(7, 10, 9, 0.62);
+      backdrop-filter: blur(2px);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+    .project-visit svg { width: 16px; height: 16px; }
+    .project-card:hover .project-visit { opacity: 1; transform: scale(1); }
     .thumb-1 { background: linear-gradient(135deg, var(--green-800), var(--green-500)); }
     .thumb-2 { background: linear-gradient(135deg, var(--green-950), var(--green-700)); }
     .thumb-3 { background: linear-gradient(135deg, var(--green-700), #0b3d35 60%, var(--green-400)); }
@@ -1502,13 +1592,15 @@ const languages = [
       flex-wrap: wrap;
     }
     .project-tags span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11.5px;
       font-weight: 600;
-      color: var(--green-400);
-      background: rgba(51,181,134,0.12);
-      padding: 4px 10px;
+      padding: 4px 10px 4px 8px;
       border-radius: 6px;
     }
+    .project-tags span svg { width: 12px; height: 12px; }
 
     /* EDUCATION */
     .education-inner {
