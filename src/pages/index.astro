@@ -264,6 +264,16 @@ const languages = [
 
   <div class="progress-rail" id="progressRail"></div>
 
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+    <figure class="lightbox-figure">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+  </div>
+
   <header class="nav" id="siteNav">
     <div class="wrap nav-inner">
       <a href="#top" class="brand">JP<span>·</span>Corona</a>
@@ -522,7 +532,7 @@ const languages = [
     </section>
 
     <!-- PROJECTS -->
-    <section class="section projects section--dark" id="projects" style="z-index:50;">
+    <section class="section projects section--dark no-stack" id="projects" style="z-index:50;">
       <span class="ghost-num" aria-hidden="true">05</span>
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -570,7 +580,7 @@ const languages = [
 
           {photoItems.map((p) => (
             p.image ? (
-              <a class="project-card" data-category="foto" href={p.image} target="_blank" rel="noopener noreferrer" style="display:none;">
+              <a class="project-card js-lightbox" data-category="foto" data-lightbox={p.image} data-lightbox-caption={p.name} href={p.image} target="_blank" rel="noopener noreferrer" style="display:none;">
                 <div class="project-thumb has-image project-thumb--media">
                   <img class="project-thumb-img" src={p.image} alt={p.name} loading="lazy" />
                 </div>
@@ -752,6 +762,35 @@ const languages = [
           card.style.display = show ? '' : 'none';
         });
       });
+    });
+
+    // Image lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const openLightbox = (src, caption) => {
+      lightboxImg.setAttribute('src', src);
+      lightboxCaption.textContent = caption || '';
+      lightbox?.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeLightbox = () => {
+      lightbox?.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+    document.querySelectorAll('.js-lightbox').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLightbox(el.getAttribute('data-lightbox'), el.getAttribute('data-lightbox-caption'));
+      });
+    });
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
     });
 
     // Active nav link highlight
@@ -947,6 +986,66 @@ const languages = [
       transform-origin: left;
       z-index: 200;
     }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: rgba(5, 8, 7, 0.9);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s ease, visibility 0s linear .35s;
+    }
+    .lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .35s ease;
+    }
+    .lightbox-figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 100%;
+      transform: scale(0.94);
+      transition: transform .35s var(--ease);
+    }
+    .lightbox.is-open .lightbox-figure { transform: scale(1); }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+    }
+    .lightbox-caption {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      width: 42px; height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      transition: background .3s ease, transform .3s ease;
+    }
+    .lightbox-close:hover { background: var(--green-500); transform: rotate(90deg); }
+    .lightbox-close svg { width: 18px; height: 18px; }
 
     /* NAV */
     .nav {
