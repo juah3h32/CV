@@ -65,16 +65,17 @@ const toolBars = [
   { name: 'Lightroom', pct: 85, tag: 'Lr', icon: 'aperture', bg: '#001E36', fg: '#31A8FF' },
 ];
 
-const techRings = [
-  { name: 'HTML5', pct: 95, icon: 'brackets', bg: '#E34F26', fg: '#fff' },
-  { name: 'CSS3', pct: 90, icon: 'droplet', bg: '#1572B6', fg: '#fff' },
-  { name: 'JavaScript', pct: 90, icon: 'bolt', bg: '#F7DF1E', fg: '#1a1a1a' },
-  { name: 'Responsive Design', pct: 95, icon: 'devices', bg: '#0f3d35', fg: '#6fd9ac' },
-  { name: 'Animaciones GSAP', pct: 85, icon: 'sparkle', bg: '#88CE02', fg: '#0b1a00' },
-  { name: 'Parallax / Scroll', pct: 90, icon: 'layers', bg: '#0f3d35', fg: '#6fd9ac' },
-  { name: 'SEO Técnico', pct: 85, icon: 'search', bg: '#0f3d35', fg: '#6fd9ac' },
-  { name: 'UI/UX Design', pct: 90, icon: 'vector', bg: '#FF61D2', fg: '#2b0a20' },
-  { name: 'WordPress', pct: 80, icon: 'globe', bg: '#21759B', fg: '#fff' },
+// Competencies, not tools — same bar treatment as "Herramientas" below,
+// so it covers the full range: web dev plus photo/video production.
+const buildSkills = [
+  { name: 'Desarrollo Web', pct: 95, tag: 'Web', icon: 'brackets', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'UI/UX Design', pct: 90, tag: 'UX', icon: 'vector', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'Fotografía de Producto', pct: 90, tag: 'Fo', icon: 'camera', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'Edición de Video', pct: 90, tag: 'Ed', icon: 'film', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'Producción Audiovisual', pct: 85, tag: 'Pa', icon: 'clapper', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'Mockups de Producto', pct: 85, tag: 'Mk', icon: 'image', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'Animaciones & Scroll', pct: 85, tag: 'Fx', icon: 'sparkle', bg: '#13513f', fg: '#6fd9ac' },
+  { name: 'SEO Técnico', pct: 80, tag: 'SEO', icon: 'search', bg: '#13513f', fg: '#6fd9ac' },
 ];
 
 const aiRings = [
@@ -394,20 +395,19 @@ const languages = [
           <div class="tools-col" data-reveal>
             <p class="eyebrow">Habilidades técnicas</p>
             <h3>Lo que sé construir</h3>
-            <div class="rings-grid rings-grid-compact">
-              {techRings.map((r) => (
-                <div class="ring-card">
-                  <span class="ring-icon" style={`background:${r.bg}; color:${r.fg};`}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[r.icon]} />
-                  </span>
-                  <span class="ring-wrap">
-                    <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                      <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-                    </svg>
-                    <span class="ring-value" data-ring-value>0%</span>
-                  </span>
-                  <p class="ring-name">{r.name}</p>
+            <div class="bars bars-compact">
+              {buildSkills.map((s) => (
+                <div class="bar-row">
+                  <div class="bar-label">
+                    <span class="bar-tag" aria-label={s.tag} style={`background:${s.bg}; color:${s.fg};`}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
+                    </span>
+                    <span>{s.name}</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill" data-pct={s.pct}></div>
+                  </div>
+                  <span class="bar-pct" data-pct-label={s.pct}>0%</span>
                 </div>
               ))}
             </div>
@@ -1785,6 +1785,13 @@ const languages = [
       flex-shrink: 0;
     }
     .lang-bars .bar-row { grid-template-columns: 90px 1fr 52px; margin-top: 30px; }
+    .bars-compact { gap: 16px; max-width: none; }
+    .bars-compact .bar-row { grid-template-columns: 1fr auto 40px; gap: 12px; }
+    .bars-compact .bar-label { font-size: 13.5px; }
+    .bars-compact .bar-tag { width: 28px; height: 28px; }
+    .bars-compact .bar-tag svg { width: 14px; height: 14px; }
+    .bars-compact .bar-track { width: 90px; }
+    .bars-compact .bar-pct { width: 34px; height: 34px; font-size: 10px; }
 
     /* CONTACT */
     .contact-card {
