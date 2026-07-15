@@ -76,7 +76,7 @@ h1, h2, h3, h4 {
   /* uppercase display type needs *positive* tracking, not negative —
      negative letter-spacing on all-caps heavy weights reads as cramped
      and letters can visually touch */
-  letter-spacing: 0.015em;
+  letter-spacing: 0.05em;
   line-height: 1.08;
   font-weight: 800;
 }
