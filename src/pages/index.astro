@@ -44,14 +44,15 @@ const stats = [
   { value: 2, suffix: '', label: 'Idiomas' },
 ];
 
+// Real per-app brand color pairs (bg/fg) so badges read as the actual apps
 const toolBars = [
-  { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', icon: 'image' },
-  { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', icon: 'vector' },
-  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', icon: 'film' },
-  { name: 'Adobe After Effects', pct: 85, tag: 'Ae', icon: 'sparkle' },
-  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', icon: 'clapper' },
-  { name: 'Figma', pct: 90, tag: 'Fi', icon: 'grid' },
-  { name: 'Lightroom', pct: 85, tag: 'Lr', icon: 'aperture' },
+  { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', icon: 'image', bg: '#001E36', fg: '#31A8FF' },
+  { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', icon: 'vector', bg: '#FF9A00', fg: '#330000' },
+  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', icon: 'film', bg: '#00005B', fg: '#9999FF' },
+  { name: 'Adobe After Effects', pct: 85, tag: 'Ae', icon: 'sparkle', bg: '#00005B', fg: '#9999FF' },
+  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', icon: 'clapper', bg: '#1c1c1c', fg: '#FF7A00' },
+  { name: 'Figma', pct: 90, tag: 'Fi', icon: 'grid', bg: '#2c2c2c', fg: '#A259FF' },
+  { name: 'Lightroom', pct: 85, tag: 'Lr', icon: 'aperture', bg: '#001E36', fg: '#31A8FF' },
 ];
 
 const techRings = [
@@ -223,7 +224,7 @@ const languages = [
         <div class="hero-glow"></div>
       </div>
       <div class="wrap hero-inner">
-        <div class="hero-card" data-reveal>
+        <div class="hero-card">
           <div class="hero-photo-frame">
             <img src="/images/profile.jpeg" alt="Retrato de Juan Pablo Corona Corona" />
           </div>
@@ -241,18 +242,18 @@ const languages = [
             </a>
           </div>
         </div>
-        <p class="hero-sub" data-reveal>
+        <p class="hero-sub">
           Construyo sitios modernos, rápidos y visualmente impecables — combinando código,
           animación, fotografía y video de producto en un solo flujo de trabajo.
         </p>
-        <div class="hero-actions" data-reveal>
+        <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">Ver proyectos</a>
           <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-ghost">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
             Descargar CV
           </a>
         </div>
-        <div class="hero-tags" data-reveal>
+        <div class="hero-tags">
           <span>Ing. Entornos Virtuales y Negocios Digitales</span>
           <span>Morelia, Michoacán, México</span>
         </div>
@@ -294,6 +295,20 @@ const languages = [
     <!-- SKILLS -->
     <section class="section skills section--dark" id="skills">
       <span class="ghost-num" aria-hidden="true">02</span>
+
+      <div class="marquee">
+        <div class="marquee-track">
+          {[...toolBars, ...toolBars].map((t, i) => (
+            <div class="marquee-item" aria-hidden={i >= toolBars.length ? 'true' : undefined}>
+              <span class="marquee-badge" style={`background:${t.bg}; color:${t.fg};`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
+              </span>
+              <span class="marquee-label">{t.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div class="wrap">
         <div class="section-head" data-reveal>
           <span class="section-num">02</span>
@@ -306,7 +321,7 @@ const languages = [
           {toolBars.map((t) => (
             <div class="bar-row">
               <div class="bar-label">
-                <span class="bar-tag" aria-label={t.tag}>
+                <span class="bar-tag" aria-label={t.tag} style={`background:${t.bg}; color:${t.fg};`}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
                 </span>
                 <span>{t.name}</span>
@@ -862,8 +877,9 @@ const languages = [
     .hero-card {
       padding: 44px 40px 36px;
       border-radius: 32px;
-      background: var(--off-white);
-      border: 1px solid var(--line);
+      background: var(--panel);
+      border: 1px solid var(--line-strong);
+      box-shadow: var(--shadow-lg);
       backdrop-filter: blur(6px);
     }
     .hero-photo-frame {
@@ -1021,6 +1037,56 @@ const languages = [
       color: var(--ink-soft);
     }
 
+    /* SKILLS - infinite icon marquee */
+    .marquee {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding: 28px 0;
+      margin-bottom: 90px;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 64px;
+      animation: marquee-scroll 26s linear infinite;
+    }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .marquee-badge {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+    .marquee-badge svg { width: 25px; height: 25px; }
+    .marquee-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+    }
+
     /* SKILLS - bars */
     .bars { display: flex; flex-direction: column; gap: 22px; max-width: 760px; }
     .bar-row {
@@ -1039,18 +1105,17 @@ const languages = [
     .bar-tag {
       width: 34px; height: 34px;
       border-radius: 9px;
-      background: var(--green-900);
-      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: background .35s var(--ease), transform .35s var(--ease);
+      box-shadow: var(--shadow-sm);
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
     }
     .bar-tag svg { width: 17px; height: 17px; }
     .bar-row:hover .bar-tag {
-      background: var(--green-500);
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: var(--shadow-md);
     }
     .bar-track {
       height: 8px;
