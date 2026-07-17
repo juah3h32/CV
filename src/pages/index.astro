@@ -221,6 +221,10 @@ const videoItems = [
   { name: 'Edición de video', desc: 'Video editado — agrega tu clip o miniatura aquí.' },
 ];
 
+// Only loop-animate a track once it has more than 3 items — with 3 or
+// fewer everything already fits without scrolling, so keep it static.
+const loopItems = <T,>(arr: T[]) => (arr.length > 3 ? [...arr, ...arr] : arr);
+
 // astro:assets needs static, literal import paths to optimize a file, so at
 // build time we just check whether the file actually landed on disk yet —
 // no image means we fall back to the gradient placeholder instead of a 404.
@@ -547,13 +551,15 @@ const languages = [
           <button class="project-tab" data-filter="foto" role="tab" aria-selected="false">Fotografía</button>
           <button class="project-tab" data-filter="video" role="tab" aria-selected="false">Video</button>
         </div>
+      </div>
 
-        <div class="project-grid">
-          {projects.map((p, i) => (
-            <a class="project-card" data-category="web" href={p.url} target="_blank" rel="noopener noreferrer" data-reveal>
-              <div class={`project-thumb ${p.image ? 'has-image' : `thumb-${i + 1}`}`}>
+      <div class="project-carousel">
+        <div class={`project-track ${projects.length > 3 ? 'project-track--loop' : ''}`} data-group="web">
+          {loopItems(projects).map((p, i) => (
+            <a class="project-card" href={p.url} target="_blank" rel="noopener noreferrer" aria-hidden={i >= projects.length ? 'true' : undefined}>
+              <div class={`project-thumb ${p.image ? 'has-image' : `thumb-${(i % projects.length) + 1}`}`}>
                 {p.image && <img class="project-thumb-img" src={p.image} alt={`Captura de ${p.name}`} loading="lazy" />}
-                <span class="project-index">0{i + 1}</span>
+                <span class="project-index">0{(i % projects.length) + 1}</span>
                 <span class="project-thumb-name">{p.name}</span>
                 <span class="project-visit">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.arrow} />
@@ -577,10 +583,12 @@ const languages = [
               </div>
             </a>
           ))}
+        </div>
 
-          {photoItems.map((p) => (
+        <div class={`project-track ${photoItems.length > 3 ? 'project-track--loop' : ''}`} data-group="foto" style="display:none;">
+          {loopItems(photoItems).map((p, i) => (
             p.image ? (
-              <a class="project-card js-lightbox" data-category="foto" data-lightbox={p.image} data-lightbox-caption={p.name} href={p.image} target="_blank" rel="noopener noreferrer" style="display:none;">
+              <a class="project-card js-lightbox" data-lightbox={p.image} data-lightbox-caption={p.name} href={p.image} target="_blank" rel="noopener noreferrer" aria-hidden={i >= photoItems.length ? 'true' : undefined}>
                 <div class="project-thumb has-image project-thumb--media">
                   <img class="project-thumb-img" src={p.image} alt={p.name} loading="lazy" />
                 </div>
@@ -590,7 +598,7 @@ const languages = [
                 </div>
               </a>
             ) : (
-              <div class="project-card project-card--empty" data-category="foto" style="display:none;">
+              <div class="project-card project-card--empty" aria-hidden={i >= photoItems.length ? 'true' : undefined}>
                 <div class="project-empty-slot">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons.image} />
                 </div>
@@ -601,9 +609,11 @@ const languages = [
               </div>
             )
           ))}
+        </div>
 
-          {videoItems.map((v) => (
-            <div class="project-card project-card--empty" data-category="video" style="display:none;">
+        <div class={`project-track ${videoItems.length > 3 ? 'project-track--loop' : ''}`} data-group="video" style="display:none;">
+          {loopItems(videoItems).map((v, i) => (
+            <div class="project-card project-card--empty" aria-hidden={i >= videoItems.length ? 'true' : undefined}>
               <div class="project-empty-slot">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={icons.film} />
               </div>
@@ -749,7 +759,7 @@ const languages = [
 
     // Project category tabs
     const projectTabs = document.querySelectorAll('.project-tab');
-    const projectCards = document.querySelectorAll('.project-grid [data-category]');
+    const projectTracks = document.querySelectorAll('.project-track');
     projectTabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const filter = tab.getAttribute('data-filter');
@@ -757,9 +767,8 @@ const languages = [
           t.classList.toggle('is-active', t === tab);
           t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
         });
-        projectCards.forEach((card) => {
-          const show = card.getAttribute('data-category') === filter;
-          card.style.display = show ? '' : 'none';
+        projectTracks.forEach((track) => {
+          track.style.display = track.getAttribute('data-group') === filter ? '' : 'none';
         });
       });
     });
@@ -1899,12 +1908,31 @@ const languages = [
     .project-card--empty .project-body { align-items: center; text-align: center; }
     .project-card--empty h3 { font-size: 14px; color: var(--ink-soft); }
     .project-card--empty p { color: var(--ink-faint); font-size: 12.5px; }
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .project-carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 44px;
+      padding: 4px 0 8px;
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .project-track {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
       gap: 20px;
     }
+    .project-track--loop {
+      width: max-content;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      animation: marquee-scroll 38s linear infinite;
+    }
+    .project-carousel:hover .project-track--loop { animation-play-state: paused; }
     .project-card {
+      width: min(340px, 84vw);
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       border-radius: var(--radius);
@@ -2199,7 +2227,6 @@ const languages = [
 
     @media (max-width: 1000px) {
       .about-inner, .education-inner, .tools-columns { grid-template-columns: 1fr; gap: 48px; }
-      .project-grid { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 160px 1fr 44px; gap: 12px; }
       .contact-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-inner { grid-template-columns: 1fr; text-align: center; padding-top: 40px; }
