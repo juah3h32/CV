@@ -355,7 +355,13 @@ const languages = [
     </section>
 
     <!-- ABOUT -->
-    <section class="section about section--dark2" id="about" style="z-index:10;">
+    <section class="section about about--video no-stack" id="about" style="z-index:10;">
+      <div class="about-video-bg" aria-hidden="true">
+        <video class="about-video" autoplay muted loop playsinline preload="metadata">
+          <source src="/video/product-animation.mp4" type="video/mp4" />
+        </video>
+        <div class="about-video-scrim"></div>
+      </div>
       <span class="ghost-num" aria-hidden="true">01</span>
       <div class="wrap about-inner">
         <div>
@@ -839,6 +845,17 @@ const languages = [
       .from('.hero-photo-glow', { scale: 0.6, opacity: 0, duration: 1 }, '-=0.9')
       .from('.hero-photo-frame', { scale: 0.7, opacity: 0, duration: 0.7 }, '-=0.7')
       .from('.nav', { y: -30, opacity: 0, duration: 0.6 }, '-=1');
+
+    // About video — subtle parallax drift as the section scrolls through
+    gsap.fromTo(
+      '.about-video',
+      { yPercent: -10 },
+      {
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true },
+      }
+    );
 
     // Generic reveal-on-scroll
     document.querySelectorAll('[data-reveal]').forEach((el) => {
@@ -1384,6 +1401,52 @@ const languages = [
       font-size: 14.5px;
       color: var(--ink-soft);
     }
+
+    /* ABOUT — video background */
+    .about--video { position: relative; }
+    .about-video-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .about-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.18);
+    }
+    .about-video-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7,10,9,.6), rgba(7,10,9,.72) 55%, rgba(7,10,9,.9));
+    }
+    .about--video .about-inner,
+    .about--video .ghost-num,
+    .about--video .section-num {
+      position: relative;
+      z-index: 1;
+    }
+    /* video always plays behind — text needs a fixed light-on-dark
+       treatment regardless of which theme (light/dark) is active */
+    .about--video h2 { color: #fff; }
+    .about--video .about-text { color: rgba(255,255,255,0.78); }
+    .about--video .eyebrow { color: var(--green-400-fixed); }
+    .about--video .eyebrow::before { background: var(--green-400-fixed); }
+    .about--video .section-num {
+      border-color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.65);
+    }
+    .about--video .ghost-num { color: rgba(255,255,255,0.06); }
+    .about--video .stat-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.16);
+    }
+    .about--video .stat-card:hover { border-color: var(--green-400-fixed); }
+    .about--video .stat-value { color: var(--green-400-fixed); }
+    .about--video .stat-label { color: rgba(255,255,255,0.65); }
 
     /* SKILLS - infinite icon marquee */
     .marquee {
