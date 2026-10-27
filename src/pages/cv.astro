@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import AppIcon from '../components/AppIcon.astro';
 import { person, toolBars, buildSkills, aiRings, experience, gear, projects, photoItems, certifications, languages } from '../data/profile';
 
 // Printable CV: two US-Letter sheets rendered from the same data as the
@@ -92,7 +93,7 @@ const lastWord = rest.pop();
           <ul class="cv-tools">
             {toolBars.map((t) => (
               <li>
-                <span class="cv-tool-tag" style={`background:${t.bg};color:${t.fg}`}>{t.tag}</span>
+                <AppIcon tool={t} size={20} />
                 <span class="cv-tool-name">{t.name}</span>
                 <span class="cv-pct">{t.pct}%</span>
               </li>
@@ -105,7 +106,7 @@ const lastWord = rest.pop();
           <ul class="cv-tools">
             {aiRings.map((r) => (
               <li>
-                <span class="cv-dot" style={`background:${r.bg}`}></span>
+                <AppIcon tool={r} size={20} />
                 <span class="cv-tool-name">{r.name}</span>
                 <span class="cv-pct">{r.pct}%</span>
               </li>

@@ -1,0 +1,44 @@
+---
+// Real app icon for a tool: a rounded square in the brand's colors holding
+// either the official vector logo (`path`, 24×24 from simple-icons) or, for
+// apps whose real icon is a lettermark (Adobe) or whose logo isn't freely
+// available, the letters in `tag`.
+interface Props {
+  tool: { name: string; tag: string; bg: string; fg: string; path?: string };
+  size?: number;
+  class?: string;
+}
+const { tool, size = 44, class: className = '' } = Astro.props;
+const radius = Math.round(size * 0.24);
+const letters = tool.tag.length > 2 ? size * 0.3 : size * 0.42;
+---
+
+<span
+  class={`app-icon ${className}`}
+  style={`width:${size}px;height:${size}px;border-radius:${radius}px;background:${tool.bg};color:${tool.fg};`}
+  role="img"
+  aria-label={tool.name}
+>
+  {tool.path ? (
+    <svg viewBox="0 0 24 24" width={size * 0.56} height={size * 0.56} aria-hidden="true"><path d={tool.path} fill="currentColor" /></svg>
+  ) : (
+    <span class="app-icon-letters" style={`font-size:${letters}px`} aria-hidden="true">{tool.tag}</span>
+  )}
+</span>
+
+<style>
+  .app-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+  /* Adobe's lettermarks are a tight, bold sans */
+  .app-icon-letters {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+</style>

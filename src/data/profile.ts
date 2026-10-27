@@ -1,3 +1,5 @@
+import { siDavinciresolve, siFigma, siClaude, siGooglegemini, siN8n } from 'simple-icons';
+
 // Single source for the portfolio page and the printable CV (/cv),
 // so both always show the same experience, skills and tools.
 
@@ -17,13 +19,13 @@ export const person = {
 
 // Real per-app brand color pairs (bg/fg) so badges read as the actual apps
 export const toolBars = [
-  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', icon: 'film', bg: '#00005B', fg: '#9999FF' },
-  { name: 'Adobe After Effects', pct: 85, tag: 'Ae', icon: 'sparkle', bg: '#00005B', fg: '#9999FF' },
-  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', icon: 'clapper', bg: '#1c1c1c', fg: '#FF7A00' },
-  { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', icon: 'image', bg: '#001E36', fg: '#31A8FF' },
-  { name: 'Lightroom', pct: 85, tag: 'Lr', icon: 'aperture', bg: '#001E36', fg: '#31A8FF' },
-  { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', icon: 'vector', bg: '#FF9A00', fg: '#330000' },
-  { name: 'Figma', pct: 90, tag: 'Fi', icon: 'grid', bg: '#2c2c2c', fg: '#A259FF' },
+  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', bg: '#00005B', fg: '#9999FF' },
+  { name: 'Adobe After Effects', pct: 85, tag: 'Ae', bg: '#00005B', fg: '#9999FF' },
+  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', bg: '#1c1c1c', fg: '#ffffff', path: siDavinciresolve.path },
+  { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', bg: '#001E36', fg: '#31A8FF' },
+  { name: 'Lightroom', pct: 85, tag: 'Lr', bg: '#001E36', fg: '#31A8FF' },
+  { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', bg: '#330000', fg: '#FF9A00' },
+  { name: 'Figma', pct: 90, tag: 'Fi', bg: '#1e1e1e', fg: '#ffffff', path: siFigma.path },
 ];
 
 // Competencies, not tools — same bar treatment as "Herramientas" below,
@@ -40,11 +42,11 @@ export const buildSkills = [
 ];
 
 export const aiRings = [
-  { name: 'ChatGPT', pct: 95, icon: 'chip', bg: '#10A37F', fg: '#fff' },
-  { name: 'Claude', pct: 90, icon: 'chip', bg: '#D97757', fg: '#fff' },
-  { name: 'Gemini', pct: 85, icon: 'chip', bg: '#4285F4', fg: '#fff' },
-  { name: 'Midjourney', pct: 80, icon: 'chip', bg: '#1a1a2e', fg: '#a78bfa' },
-  { name: 'Automatización n8n', pct: 80, icon: 'chip', bg: '#EA4B71', fg: '#fff' },
+  { name: 'ChatGPT', pct: 95, tag: 'GPT', bg: '#10A37F', fg: '#fff' },
+  { name: 'Claude', pct: 90, tag: 'Cl', bg: '#D97757', fg: '#fff', path: siClaude.path },
+  { name: 'Gemini', pct: 85, tag: 'Ge', bg: '#ffffff', fg: '#4285F4', path: siGooglegemini.path },
+  { name: 'Midjourney', pct: 80, tag: 'MJ', bg: '#0d0d0d', fg: '#fff' },
+  { name: 'Automatización n8n', pct: 80, tag: 'n8n', bg: '#EA4B71', fg: '#fff', path: siN8n.path },
 ];
 
 export const experience = [

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import fs from 'node:fs';
+import AppIcon from '../components/AppIcon.astro';
 import { toolBars, buildSkills, aiRings, experience, gear, projects, photoItems, certifications, languages } from '../data/profile';
 
 // Minimal line-icon set — straight-line/primitive SVG only (no curve commands)
@@ -441,9 +442,7 @@ for (const p of projects) {
         <div class="marquee-track">
           {[...toolBars, ...toolBars].map((t, i) => (
             <div class="marquee-item" aria-hidden={i >= toolBars.length ? 'true' : undefined}>
-              <span class="marquee-badge" style={`background:${t.bg}; color:${t.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-              </span>
+              <AppIcon tool={t} size={44} />
               <span class="marquee-label">{t.name}</span>
             </div>
           ))}
@@ -454,9 +453,7 @@ for (const p of projects) {
         <div class="tool-grid">
           {topTools.map((t) => (
             <div class="bento-card tool-tile reveal-card" data-ticks>
-              <span class="tool-tile-icon" style={`background:${t.bg}; color:${t.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-              </span>
+              <span class="tool-tile-icon"><AppIcon tool={t} size={48} /></span>
               <span class="tool-tile-name">{t.name}</span>
               <span class="tool-tile-pct" data-pct-label={t.pct}>0%</span>
               <div class="ticks">
@@ -501,7 +498,7 @@ for (const p of projects) {
                     </svg>
                     <span class="ring-value" data-ring-value>0%</span>
                   </span>
-                  <p class="ring-name"><i style={`background:${r.bg}`}></i>{r.name}</p>
+                  <p class="ring-name"><AppIcon tool={r} size={20} />{r.name}</p>
                 </div>
               ))}
             </div>
@@ -1449,15 +1446,8 @@ for (const p of projects) {
       transition: opacity .7s ease, transform .9s var(--ease), box-shadow .5s var(--ease);
     }
     .tool-tile.is-in:hover { transform: scale(1.02); box-shadow: var(--shadow-md); }
-    .tool-tile-icon {
-      grid-column: 1 / -1;
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .tool-tile-icon svg { width: 23px; height: 23px; }
+    /* the icon itself (size, colors, logo) comes from <AppIcon> */
+    .tool-tile-icon { grid-column: 1 / -1; display: flex; }
     .tool-tile-name { font-size: 15px; font-weight: 600; }
     .tool-tile-pct { font-size: 13px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
     .tool-tile .ticks { grid-column: 1 / -1; }
@@ -1538,7 +1528,6 @@ for (const p of projects) {
       color: var(--ink-soft);
       text-align: center;
     }
-    .ring-name i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
     /* EXPERIENCE */
     .timeline {

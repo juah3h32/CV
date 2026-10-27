@@ -15,5 +15,8 @@
   "dependencies": {
     "astro": "^7.0.9",
     "gsap": "^3.15.0"
+  },
+  "devDependencies": {
+    "simple-icons": "^16.36.0"
   }
 }
