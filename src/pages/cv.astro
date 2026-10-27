@@ -235,11 +235,12 @@ const lastWord = rest.pop();
 
     /* HEADER */
     .cv-head { display: flex; gap: 26px; align-items: center; }
+    /* exactly the cut-out's 2:3 ratio, so object-fit never trims the head */
     .cv-photo {
       position: relative;
-      flex: 0 0 140px;
-      height: 186px;
-      margin-top: -14px;
+      flex: 0 0 128px;
+      height: 192px;
+      margin-top: -6px;
     }
     .cv-photo-frame {
       position: absolute;
@@ -263,7 +264,8 @@ const lastWord = rest.pop();
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: bottom center;
       filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.3));
     }
     .cv-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
