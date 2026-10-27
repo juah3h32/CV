@@ -19,9 +19,9 @@ export const person = {
 
 // Real per-app brand color pairs (bg/fg) so badges read as the actual apps
 export const toolBars = [
-  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', bg: '#00005B', fg: '#9999FF' },
+  { name: 'Adobe Premiere Pro', pct: 75, tag: 'Pr', bg: '#00005B', fg: '#9999FF' },
   { name: 'Adobe After Effects', pct: 85, tag: 'Ae', bg: '#00005B', fg: '#9999FF' },
-  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', bg: '#1c1c1c', fg: '#ffffff', path: siDavinciresolve.path },
+  { name: 'DaVinci Resolve', pct: 90, tag: 'Dv', bg: '#1c1c1c', fg: '#ffffff', path: siDavinciresolve.path },
   { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', bg: '#001E36', fg: '#31A8FF' },
   { name: 'Lightroom', pct: 85, tag: 'Lr', bg: '#001E36', fg: '#31A8FF' },
   { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', bg: '#330000', fg: '#FF9A00' },
