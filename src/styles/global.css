@@ -1,12 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
-
 @font-face {
   font-family: 'Morganite';
   src: url('/fonts/MorganitePro-ExtraBold.woff2') format('woff2'),
        url('/fonts/MorganitePro-ExtraBold.woff') format('woff');
   font-weight: 800;
   font-style: normal;
-  font-display: swap;
+  /* preloaded in <head>; block (not swap) so titles never flash a fallback face */
+  font-display: block;
 }
 
 :root {
@@ -76,6 +75,12 @@ h1 em, h2 em {
   color: transparent;
   padding-right: 0.02em;
 }
+/* first view stays hidden until the fonts are ready (class set in <head>,
+   removed by the page script or a 2.5s safety timeout) */
+.fonts-loading .nav,
+.fonts-loading .hero-copy,
+.fonts-loading .hero-photo { visibility: hidden; }
+
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }

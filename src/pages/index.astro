@@ -109,6 +109,15 @@ for (const p of projects) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Juan Pablo Corona Corona — Videógrafo, editor y creador de contenido digital. Video y fotografía de producto, motion graphics, diseño, desarrollo web y marketing con IA." />
   <title>Juan Pablo Corona — Video, Fotografía y Contenido Digital</title>
+  <link rel="preload" href="/fonts/MorganitePro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" />
+  <script is:inline>
+    // Hide the first view until fonts load, so text never flashes in a fallback face.
+    document.documentElement.classList.add('fonts-loading');
+    setTimeout(() => document.documentElement.classList.remove('fonts-loading'), 2500);
+  </script>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -763,12 +772,19 @@ for (const p of projects) {
       });
     });
 
-    // Hero entrance
-    gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.2 } })
+    // Hero entrance — waits for the fonts (capped at 2.5s), then reveals the
+    // first view and animates it in with the final typeface already in place
+    const heroIn = gsap.timeline({ paused: true, defaults: { ease: 'expo.out', duration: 1.2 } })
       .from('.nav', { y: -20, opacity: 0, duration: 0.9 })
       .from('.hero-photo', { y: 40, scale: 0.96, opacity: 0, duration: 1.4 }, '-=0.7')
       .from(['.hero-eyebrow', '.hero-name', '.hero-sub', '.hero-actions', '.hero-social', '.hero-meta'],
         { y: 24, opacity: 0, stagger: 0.08 }, '-=1');
+    Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2500))]).then(() => {
+      heroIn.progress(0);
+      document.documentElement.classList.remove('fonts-loading');
+      heroIn.play();
+      ScrollTrigger.refresh();
+    });
 
     // Hero portrait: the whole stage tilts toward the pointer; the cut-out
     // sits on a closer Z layer, so it shifts more than the frame — depth.

@@ -12,7 +12,7 @@ export const person = {
   phone: '443 484 5466',
   phoneHref: 'tel:4434845466',
   location: 'Morelia, Michoacán, México',
-  website: 'portafoliojuanpa.com',
+  website: 'juanpacv.com',
   summary:
     'Creador audiovisual con más de 5 años de experiencia en videos corporativos, de producto y fotografía: grabación con cámara profesional, drones e iluminación, edición, color y motion graphics. Complemento cada proyecto con diseño, desarrollo web y marketing digital con IA, para entregar piezas terminadas listas para redes, campañas o el sitio de la marca.',
 };
