@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
 
+@font-face {
+  font-family: 'Morganite';
+  src: url('/fonts/MorganitePro-ExtraBold.woff2') format('woff2'),
+       url('/fonts/MorganitePro-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Apple-style light palette — white / light-gray section rhythm, near-black
      ink, a single blue accent for links and primary actions */
@@ -9,10 +18,10 @@
   --ink: #1d1d1f;
   --ink-soft: #6e6e73;
   --ink-faint: #86868b;
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --accent-link: #0066cc;
-  --accent-tint: rgba(0, 113, 227, 0.08);
+  --accent: #2445ff;
+  --accent-hover: #1a37e6;
+  --accent-link: #2445ff;
+  --accent-tint: rgba(36, 69, 255, 0.08);
   --line: rgba(0, 0, 0, 0.08);
   --line-strong: rgba(0, 0, 0, 0.14);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -23,6 +32,13 @@
   --container: 1080px;
   --radius: 22px;
   --radius-sm: 14px;
+  /* one type scale for the whole page */
+  --fs-display: clamp(72px, 8vw, 112px);
+  --fs-h2: clamp(52px, 5.4vw, 76px);
+  --fs-h3: clamp(30px, 2.5vw, 36px);
+  --fs-lead: clamp(17px, 1.35vw, 19px);
+  --fs-stat: clamp(72px, 6.2vw, 96px);
+  --font-display: 'Morganite', 'Arial Narrow', sans-serif;
   --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -44,11 +60,21 @@ body {
   overflow-x: clip;
 }
 h1, h2, h3, h4 {
-  font-family: var(--font);
+  font-family: var(--font-display);
   margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.08;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+}
+/* highlighted word inside a title: same blue → violet as the accent */
+h1 em, h2 em {
+  font-style: normal;
+  background: linear-gradient(90deg, #2445ff 10%, #19b5fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.02em;
 }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
@@ -79,12 +105,16 @@ ul { list-style: none; margin: 0; padding: 0; }
   text-align: center;
 }
 .section-head h2 {
-  font-size: clamp(36px, 5vw, 56px);
+  /* titles may run wider than the 720px intro text below them */
+  margin-left: -80px;
+  margin-right: -80px;
+  text-wrap: balance;
+  font-size: var(--fs-h2);
   margin-top: 10px;
 }
 .section-head p {
   margin-top: 16px;
-  font-size: clamp(17px, 1.6vw, 21px);
+  font-size: var(--fs-lead);
   color: var(--ink-soft);
 }
 
@@ -119,10 +149,11 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 ::selection {
-  background: rgba(0, 113, 227, 0.2);
+  background: rgba(36, 69, 255, 0.2);
 }
 
 @media (max-width: 900px) {
   .section { padding: 88px 0; }
   .wrap { padding: 0 22px; }
+  .section-head h2 { margin-left: 0; margin-right: 0; }
 }

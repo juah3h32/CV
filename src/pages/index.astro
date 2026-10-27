@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import fs from 'node:fs';
+import { toolBars, buildSkills, aiRings, experience, gear, projects, photoItems, certifications, languages } from '../data/profile';
 
 // Minimal line-icon set — straight-line/primitive SVG only (no curve commands)
 // so every glyph renders identically everywhere, no icon-font dependency.
@@ -39,11 +40,11 @@ const icons: Record<string, string> = {
 
 const nav = [
   { href: '#top', label: 'Inicio', icon: 'home' },
-  { href: '#about', label: 'Sobre mí', icon: 'user' },
-  { href: '#skills', label: 'Habilidades', icon: 'grid' },
-  { href: '#experience', label: 'Experiencia', icon: 'briefcase' },
-  { href: '#gear', label: 'Equipo', icon: 'camera' },
   { href: '#projects', label: 'Proyectos', icon: 'image' },
+  { href: '#about', label: 'Sobre mí', icon: 'user' },
+  { href: '#experience', label: 'Experiencia', icon: 'briefcase' },
+  { href: '#skills', label: 'Habilidades', icon: 'grid' },
+  { href: '#gear', label: 'Equipo', icon: 'camera' },
   { href: '#contact', label: 'Contacto', icon: 'mail' },
 ];
 
@@ -62,113 +63,10 @@ const process = [
   { title: 'Publicar y medir', desc: 'Formatos para redes, campañas y web, con métricas y reportes automatizados con IA.', icon: 'bolt' },
 ];
 
-// Real per-app brand color pairs (bg/fg) so badges read as the actual apps
-const toolBars = [
-  { name: 'Adobe Premiere Pro', pct: 90, tag: 'Pr', icon: 'film', bg: '#00005B', fg: '#9999FF' },
-  { name: 'Adobe After Effects', pct: 85, tag: 'Ae', icon: 'sparkle', bg: '#00005B', fg: '#9999FF' },
-  { name: 'DaVinci Resolve', pct: 85, tag: 'Dv', icon: 'clapper', bg: '#1c1c1c', fg: '#FF7A00' },
-  { name: 'Adobe Photoshop', pct: 95, tag: 'Ps', icon: 'image', bg: '#001E36', fg: '#31A8FF' },
-  { name: 'Lightroom', pct: 85, tag: 'Lr', icon: 'aperture', bg: '#001E36', fg: '#31A8FF' },
-  { name: 'Adobe Illustrator', pct: 90, tag: 'Ai', icon: 'vector', bg: '#FF9A00', fg: '#330000' },
-  { name: 'Figma', pct: 90, tag: 'Fi', icon: 'grid', bg: '#2c2c2c', fg: '#A259FF' },
-];
-
 // The tile grid shows only the five most-used apps in one row — video
 // and photo first; the marquee above it still lists every tool.
 const topTools = ['Adobe Premiere Pro', 'Adobe After Effects', 'DaVinci Resolve', 'Adobe Photoshop', 'Lightroom']
   .map((name) => toolBars.find((t) => t.name === name)!);
-
-// Competencies, not tools — same bar treatment as "Herramientas" below,
-// so it covers the full range: web dev plus photo/video production.
-const buildSkills = [
-  { name: 'Edición de Video', pct: 90, tag: 'Ed', icon: 'film', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'Fotografía de Producto', pct: 90, tag: 'Fo', icon: 'camera', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'Producción Audiovisual', pct: 85, tag: 'Pa', icon: 'clapper', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'Motion Graphics', pct: 85, tag: 'Fx', icon: 'sparkle', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'Mockups de Producto', pct: 85, tag: 'Mk', icon: 'image', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'UI/UX Design', pct: 90, tag: 'UX', icon: 'vector', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'Desarrollo Web', pct: 95, tag: 'Web', icon: 'brackets', bg: '#e8f1fc', fg: '#0071e3' },
-  { name: 'SEO Técnico', pct: 80, tag: 'SEO', icon: 'search', bg: '#e8f1fc', fg: '#0071e3' },
-];
-
-const aiRings = [
-  { name: 'ChatGPT', pct: 95, icon: 'chip', bg: '#10A37F', fg: '#fff' },
-  { name: 'Claude', pct: 90, icon: 'chip', bg: '#D97757', fg: '#fff' },
-  { name: 'Gemini', pct: 85, icon: 'chip', bg: '#4285F4', fg: '#fff' },
-  { name: 'Midjourney', pct: 80, icon: 'chip', bg: '#1a1a2e', fg: '#a78bfa' },
-  { name: 'Automatización n8n', pct: 80, icon: 'chip', bg: '#EA4B71', fg: '#fff' },
-];
-
-const experience = [
-  {
-    company: 'Grupo Ortiz',
-    initials: 'GO',
-    role: 'Marketing Digital & Desarrollo Web',
-    period: '2025 — Presente',
-    current: true,
-    points: [
-      'Desarrollo de páginas web corporativas.',
-      'Creación de animaciones y efectos interactivos.',
-      'Diseño UI/UX y optimización para dispositivos móviles.',
-      'Producción audiovisual y fotografía de productos.',
-      'Desarrollo de app para e-commerce con roles de usuario y módulo completo de repartidor.',
-      'Automatización de reportes y métricas con IA.',
-    ],
-  },
-  {
-    company: 'SurCasas',
-    initials: 'SC',
-    role: 'Desarrollador Web & Marketing Digital',
-    period: '2024 — 2025',
-    points: [
-      'Desarrollo y mantenimiento del sitio web y landing pages.',
-      'Optimización SEO y mejora de rendimiento.',
-      'Diseño de interfaces modernas y experiencia de usuario.',
-      'Implementación de animaciones y efectos Parallax.',
-      'Gestión de campañas digitales y redes sociales.',
-    ],
-  },
-  {
-    company: 'Inpower Machine',
-    initials: 'IM',
-    role: 'Marketing Digital, Video & Fotografía',
-    period: '2023 — 2024',
-    points: [
-      'Producción de contenido audiovisual para campañas.',
-      'Edición de video y fotografía de productos.',
-      'Manejo de cámaras, iluminación y drones.',
-    ],
-  },
-  {
-    company: 'Caja Morelia Valladolid',
-    initials: 'CM',
-    role: 'Diseño de interfaces FRONT-END',
-    period: '2022',
-    points: [
-      'Desarrollo de interfaces web.',
-      'Mejora de experiencia de usuario y diseño responsivo.',
-    ],
-  },
-  {
-    company: 'Salinas Graphic',
-    initials: 'SG',
-    role: 'Diseño Gráfico en Impresión Física',
-    period: '2019 — 2020',
-    points: [
-      'Diseño de materiales impresos y branding.',
-      'Preparación de archivos para impresión.',
-    ],
-  },
-];
-
-const gear = [
-  { title: 'Cámaras', icon: 'camera', items: ['Sony FX3', 'Sony A7III', 'Sony A7CR', 'Sony ZV-10', 'DJI Osmo Action'] },
-  { title: 'Lentes', icon: 'aperture', items: ['24–70mm f/2.8', '50mm f/1.8', 'Sigma 18–35mm f/1.8'] },
-  { title: 'Drones', icon: 'drone', items: ['DJI Mavic Air 2', 'DJI Mini 2'] },
-  { title: 'Iluminación', icon: 'light', items: ['Godox SL60W', 'Softbox', 'Reflectores LED'] },
-  { title: 'Audio', icon: 'audio', items: ['Rode VideoMic Pro', 'Zoom H1n'] },
-  { title: 'Edición', icon: 'edit', items: ['Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve'] },
-];
 
 // Real brand colors for project tag chips, matching the tech-ring badges
 const tagMeta: Record<string, { icon: string; bg: string; fg: string }> = {
@@ -178,52 +76,13 @@ const tagMeta: Record<string, { icon: string; bg: string; fg: string }> = {
   GSAP: { icon: 'sparkle', bg: '#88CE02', fg: '#0b1a00' },
 };
 
-// Drop real screenshots at these paths (public/images/projects/) and the
-// card automatically swaps the gradient placeholder for the real preview.
-const projects = [
-  {
-    name: 'grupo-ortiz.com',
-    desc: 'Sitio corporativo con diseño moderno, animaciones Parallax y enfoque en rendimiento.',
-    tags: ['HTML', 'CSS', 'JS', 'GSAP'],
-    url: 'https://grupo-ortiz.com',
-    image: 'https://image.thum.io/get/width/900/https://grupo-ortiz.com',
-    category: 'web',
-  },
-  {
-    name: 'naturizable.com',
-    desc: 'Sitio de productos naturales con diseño UI/UX, animaciones suaves y optimización de SEO.',
-    tags: ['HTML', 'CSS', 'JS'],
-    url: 'https://naturizable.com',
-    image: 'https://image.thum.io/get/width/900/https://naturizable.com',
-    category: 'web',
-  },
-  {
-    name: 'hotelpuntagaleria.mx',
-    desc: 'Sitio web para hotel con galería visual, información de habitaciones y experiencia de marca inmersiva.',
-    tags: ['HTML', 'CSS', 'JS'],
-    url: 'https://hotelpuntagaleria.mx/',
-    // live thumbnail service — no local screenshot file needed for this one
-    image: 'https://image.thum.io/get/width/900/https://hotelpuntagaleria.mx/',
-    category: 'web',
-  },
-];
-
 // Fotografía / Video slots — waiting on real files (public/images/projects/
 // for photos, public/images/projects/ + a poster frame for video). Each
 // renders as an empty upload-style placeholder until an `image` is added.
-const photoItems = [
-  { name: 'Papas fritas', desc: 'Fotografía de producto — sesión de comida.', image: '/images/photography/papas-ketchup.jpg' },
-  { name: 'Empaque Naturizable', desc: 'Fotografía de producto — packaging biodegradable.', image: '/images/photography/empaque-naturizable.jpg' },
-  { name: 'Papas y tiras de pollo', desc: 'Fotografía de producto — sesión de comida.', image: '/images/photography/papas-alitas.jpg' },
-  { name: 'Charolas Naturizable', desc: 'Fotografía de producto — packaging biodegradable.', image: '/images/photography/charolas-stack.jpg' },
-  { name: 'Charola biodegradable', desc: 'Fotografía de producto — packaging Naturizable.', image: '/images/photography/charola-plana.jpg' },
-  { name: 'Charola Naturizable', desc: 'Fotografía de producto — en uso.', image: '/images/photography/charola-mano.jpg' },
-];
 // Items with a `src` render as a playing video card; the rest are empty slots
 // waiting for more clips in public/video/.
 const videoItems: { name: string; desc: string; src?: string; tags?: string[] }[] = [
   { name: 'Motion graphics 3D', desc: 'Animación de logotipos y tecnologías con iluminación, partículas y edición final.', src: '/video/product-animation.mp4', tags: ['After Effects', 'Premiere Pro', 'Motion'] },
-  { name: 'Más videos pronto', desc: 'Nuevos proyectos de video en camino.' },
 ];
 
 // Only loop-animate a track once it has more than 3 items — with 3 or
@@ -241,17 +100,6 @@ for (const p of projects) {
   if (!onDisk) delete (p as any).image;
 }
 
-const certifications = [
-  'Adobe Photoshop — Certificado',
-  'Marketing Digital — Curso Digital',
-  'Adobe Lightroom — Certificado',
-  'Fundamentos de IA Generativa',
-  'Prompt Engineering con ChatGPT',
-];
-
-const languages = [
-  { name: 'Español', pct: 100 },
-];
 ---
 
 <html lang="es">
@@ -286,7 +134,7 @@ const languages = [
         ))}
       </nav>
       <div class="nav-cta">
-        <a href="/images/cv-juan-pablo-corona.jpg" download class="btn btn-primary btn-sm">Descargar CV</a>
+        <a href="/cv-juan-pablo-corona.pdf" download="CV-Juan-Pablo-Corona.pdf" class="btn btn-primary btn-sm">Descargar CV</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
         <span></span><span></span>
@@ -299,11 +147,9 @@ const languages = [
     <!-- HERO -->
     <section class="hero section--white">
       <div class="wrap hero-inner">
-        <div class="hero-photo">
-          <img src="/images/profile.jpeg" alt="Retrato de Juan Pablo Corona Corona" />
-        </div>
+        <div class="hero-copy">
         <p class="eyebrow hero-eyebrow">Video · Fotografía · Diseño · Web</p>
-        <h1 class="hero-name">Juan Pablo Corona</h1>
+        <h1 class="hero-name">Juan Pablo <em>Corona</em></h1>
         <p class="hero-sub">
           Levanto contenido con cámara profesional y realizo videos corporativos y de
           producto — y llevo cada pieza a la pantalla con diseño, web, marketing e IA.
@@ -324,222 +170,30 @@ const languages = [
           </a>
         </div>
         <p class="hero-meta">Ing. Entornos Virtuales y Negocios Digitales · Morelia, Michoacán, México</p>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="section about section--gray" id="about">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Sobre mí</p>
-          <h2>Más de 5 años contando marcas con imagen y movimiento.</h2>
-          <p>
-            Creador audiovisual enfocado en videos corporativos, de producto y fotografía: grabación con
-            cámara, drones e iluminación, edición, color y motion graphics. Además diseño,
-            desarrollo web y marketing digital con IA, así que cada video llega terminado a
-            donde tiene que vivir — redes, campañas o el sitio de la marca.
-          </p>
         </div>
-        <div class="bento">
-          <!-- Services: one bento card per discipline, each with its own small live visual -->
-          <div class="bento-card svc svc--photo reveal-card">
-            <img src="/images/photography/papas-alitas.jpg" alt="" loading="lazy" />
-            <div class="svc-copy">
-              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.camera} /></span>
-              <h3>Video y fotografía</h3>
-              <p>Videos corporativos y de producto con cámara profesional, drones e iluminación — de la grabación a la edición, color y motion graphics.</p>
-              <div class="svc-chips svc-chips--dark"><span>Sony FX3 / A7III</span><span>DJI</span><span>Premiere</span><span>After Effects</span><span>DaVinci</span></div>
+        <!-- Pop-out portrait: the framed card holds only the blurred glow of the
+             photo; the cut-out of me sits on a closer 3D layer and breaks out
+             past the frame's top and right edges. -->
+        <figure class="hero-photo" id="heroPhoto">
+          <div class="hero-stage">
+            <div class="hero-frame">
+              <img class="hero-glow" src="/images/yo.webp" alt="" aria-hidden="true" />
             </div>
+            <img class="hero-cutout" src="/images/yo-cut.webp" alt="Juan Pablo Corona con cámara de cine en gimbal" width="1024" height="1536" fetchpriority="high" />
+            <figcaption class="hero-badge">
+              <a href="#contact" class="hero-badge-card">
+                <span class="hero-badge-dot" aria-hidden="true"></span>
+                <span class="hero-badge-text">
+                  <strong>Disponible</strong>
+                  <span>para nuevos proyectos</span>
+                </span>
+                <span class="hero-badge-go" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8,7 17,7 17,16"/></svg>
+                </span>
+              </a>
+            </figcaption>
           </div>
-
-          <div class="bento-card svc svc--growth reveal-card">
-            <div class="svc-copy">
-              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.chip} /></span>
-              <h3>Marketing e IA</h3>
-              <p>Campañas, redes y SEO, con reportes y métricas automatizados con IA.</p>
-            </div>
-            <div class="svc-chart" aria-hidden="true">
-              {[38, 52, 46, 64, 58, 78, 92].map((h, i) => (
-                <span style={`--h:${h}%; --i:${i}`} class={i === 6 ? 'is-now' : ''}></span>
-              ))}
-            </div>
-          </div>
-
-          <div class="bento-card svc svc--web reveal-card">
-            <div class="svc-copy">
-              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.brackets} /></span>
-              <h3>Desarrollo web</h3>
-              <p>Sitios corporativos y landing pages rápidos, responsivos y con animaciones fluidas.</p>
-              <div class="svc-chips"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GSAP</span><span>Astro</span></div>
-            </div>
-            <div class="svc-browser" aria-hidden="true">
-              <div class="svc-browser-bar"><i></i><i></i><i></i><span></span></div>
-              <div class="svc-browser-body">
-                <span class="sk sk--hero"></span>
-                <span class="sk sk--line"></span>
-                <span class="sk sk--line sk--short"></span>
-                <div class="sk-row"><span class="sk sk--card"></span><span class="sk sk--card"></span><span class="sk sk--card"></span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bento-card svc svc--ui reveal-card">
-            <div class="svc-copy">
-              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.vector} /></span>
-              <h3>Diseño UI/UX</h3>
-              <p>Interfaces claras en Figma, pensadas primero para móvil.</p>
-            </div>
-            <div class="svc-layout" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-
-          {stats.map((s, i) => (
-            <div class={`bento-card stat-card stat-card--${i + 1} reveal-card`}>
-              <div class="stat-label">{s.label}</div>
-              <div class="stat-value" data-count={s.value} data-suffix={s.suffix}>0{s.suffix}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section skills section--white" id="skills">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Herramientas</p>
-          <h2>Software que domino a diario.</h2>
-          <p>De la edición y el color en video al retoque fotográfico y el diseño.</p>
-        </div>
-      </div>
-
-      <div class="marquee">
-        <div class="marquee-track">
-          {[...toolBars, ...toolBars].map((t, i) => (
-            <div class="marquee-item" aria-hidden={i >= toolBars.length ? 'true' : undefined}>
-              <span class="marquee-badge" style={`background:${t.bg}; color:${t.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-              </span>
-              <span class="marquee-label">{t.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="wrap">
-        <div class="tool-grid">
-          {topTools.map((t) => (
-            <div class="bento-card tool-tile reveal-card" data-ticks>
-              <span class="tool-tile-icon" style={`background:${t.bg}; color:${t.fg};`}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-              </span>
-              <span class="tool-tile-name">{t.name}</span>
-              <span class="tool-tile-pct" data-pct-label={t.pct}>0%</span>
-              <div class="ticks">
-                {Array.from({ length: 24 }, (_, k) => <i class={k < Math.round(t.pct * 0.24) ? 'on' : ''} style={`--k:${k}`} />)}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div class="tools-columns">
-          <div class="bento-card tools-col reveal-card">
-            <p class="eyebrow">Habilidades técnicas</p>
-            <h3>Lo que sé hacer</h3>
-            <div class="bars">
-              {buildSkills.map((s) => (
-                <div class="bar-row" data-ticks>
-                  <div class="bar-label">
-                    <span class="bar-tag" aria-label={s.tag} style={`background:${s.bg}; color:${s.fg};`}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
-                    </span>
-                    <span>{s.name}</span>
-                  </div>
-                  <div class="ticks">
-                    {Array.from({ length: 30 }, (_, k) => <i class={k < Math.round(s.pct * 0.3) ? 'on' : ''} style={`--k:${k}`} />)}
-                  </div>
-                  <span class="bar-pct" data-pct-label={s.pct}>0%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div class="bento-card tools-col reveal-card">
-            <p class="eyebrow">IA &amp; automatización</p>
-            <h3>IA aplicada al trabajo real</h3>
-            <div class="rings-grid">
-              {aiRings.map((r) => (
-                <div class="ring-card">
-                  <span class="ring-wrap">
-                    <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
-                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                      <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
-                    </svg>
-                    <span class="ring-value" data-ring-value>0%</span>
-                  </span>
-                  <p class="ring-name"><i style={`background:${r.bg}`}></i>{r.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section class="section experience section--gray" id="experience">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Trayectoria</p>
-          <h2>Experiencia profesional.</h2>
-          <p>Las marcas y equipos donde he diseñado, desarrollado y producido contenido.</p>
-        </div>
-
-        <div class="timeline">
-          {experience.map((job) => (
-            <div class={`bento-card timeline-card reveal-card ${job.current ? 'is-current' : ''}`}>
-              <div class="timeline-side">
-                <span class="timeline-period">{job.period}</span>
-                {job.current && <span class="timeline-flag">Actual</span>}
-              </div>
-              <div class="timeline-main">
-                <h3>{job.company}</h3>
-                <p class="timeline-role">{job.role}</p>
-                <ul class="timeline-points">
-                  {job.points.map((p) => <li>{p}</li>)}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- GEAR -->
-    <section class="section gear section--white" id="gear">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Producción audiovisual</p>
-          <h2>Equipo profesional.</h2>
-          <p>Fotografía de producto y video de alta calidad, de la captura a la edición final.</p>
-        </div>
-      </div>
-
-      <div class="gear-marquee">
-        <div class="gear-track">
-          {[...gear, ...gear].map((g, i) => (
-            <div class="gear-card" aria-hidden={i >= gear.length ? 'true' : undefined}>
-              <span class="gear-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
-              </span>
-              <h3>{g.title}</h3>
-              <ul class="gear-list">
-                {g.items.map((it) => <li>{it}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
+        </figure>
       </div>
     </section>
 
@@ -548,8 +202,8 @@ const languages = [
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="eyebrow">Proyectos</p>
-          <h2>Trabajo seleccionado.</h2>
-          <p>Sitios web, fotografía de producto y video — diseñados, producidos y entregados de principio a fin.</p>
+          <h2>Trabajo <em>seleccionado</em>.</h2>
+          <p>Video, fotografía de producto y sitios web — producidos y entregados de principio a fin.</p>
         </div>
 
         <div class="seg-wrap" data-reveal>
@@ -643,13 +297,90 @@ const languages = [
       </div>
     </section>
 
+    <!-- ABOUT -->
+    <section class="section about section--white" id="about">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Sobre mí</p>
+          <h2>5 años de <em>imagen y movimiento</em>.</h2>
+          <p>
+            Creador audiovisual enfocado en videos corporativos, de producto y fotografía: grabación con
+            cámara, drones e iluminación, edición, color y motion graphics. Además diseño,
+            desarrollo web y marketing digital con IA, así que cada video llega terminado a
+            donde tiene que vivir — redes, campañas o el sitio de la marca.
+          </p>
+        </div>
+        <div class="bento">
+          <!-- Services: one bento card per discipline, each with its own small live visual -->
+          <div class="bento-card svc svc--photo reveal-card">
+            <img src="/images/photography/papas-alitas.jpg" alt="" loading="lazy" />
+            <div class="svc-copy">
+              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.camera} /></span>
+              <h3>Video y fotografía</h3>
+              <p>Videos corporativos y de producto con cámara profesional, drones e iluminación — de la grabación a la edición, color y motion graphics.</p>
+              <div class="svc-chips svc-chips--dark"><span>Sony FX3 / A7III</span><span>DJI</span><span>Premiere</span><span>After Effects</span><span>DaVinci</span></div>
+            </div>
+          </div>
+
+          <div class="bento-card svc svc--growth reveal-card">
+            <div class="svc-copy">
+              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.chip} /></span>
+              <h3>Marketing e IA</h3>
+              <p>Campañas, redes y SEO, con reportes y métricas automatizados con IA.</p>
+            </div>
+            <div class="svc-chart" aria-hidden="true">
+              {[38, 52, 46, 64, 58, 78, 92].map((h, i) => (
+                <span style={`--h:${h}%; --i:${i}`} class={i === 6 ? 'is-now' : ''}></span>
+              ))}
+            </div>
+          </div>
+
+          <div class="bento-card svc svc--web reveal-card">
+            <div class="svc-copy">
+              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.brackets} /></span>
+              <h3>Desarrollo web</h3>
+              <p>Sitios corporativos y landing pages rápidos, responsivos y con animaciones fluidas.</p>
+              <div class="svc-chips"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GSAP</span><span>Astro</span></div>
+            </div>
+            <div class="svc-browser" aria-hidden="true">
+              <div class="svc-browser-bar"><i></i><i></i><i></i><span></span></div>
+              <div class="svc-browser-body">
+                <span class="sk sk--hero"></span>
+                <span class="sk sk--line"></span>
+                <span class="sk sk--line sk--short"></span>
+                <div class="sk-row"><span class="sk sk--card"></span><span class="sk sk--card"></span><span class="sk sk--card"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bento-card svc svc--ui reveal-card">
+            <div class="svc-copy">
+              <span class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons.vector} /></span>
+              <h3>Diseño UI/UX</h3>
+              <p>Interfaces claras en Figma, pensadas primero para móvil.</p>
+            </div>
+            <div class="svc-layout" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+
+          {stats.map((s, i) => (
+            <div class={`bento-card stat-card stat-card--${i + 1} reveal-card`}>
+              <div class="stat-label">{s.label}</div>
+              <div class="stat-value" data-count={s.value} data-suffix={s.suffix}>0{s.suffix}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- PROCESS -->
-    <section class="section process section--white" id="process">
+    <section class="section process section--gray" id="process">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="eyebrow">Cómo trabajo</p>
-          <h2>De la idea al lanzamiento.</h2>
-          <p>Un solo responsable para estrategia, diseño, código y contenido — sin pasar el proyecto de mano en mano.</p>
+          <h2>De la idea al <em>lanzamiento</em>.</h2>
+          <p>Un solo responsable de la idea, la grabación, la edición y la publicación — sin pasar el proyecto de mano en mano.</p>
         </div>
         <div class="process-grid">
           <div class="process-line" aria-hidden="true"><span class="process-line-fill"></span></div>
@@ -667,12 +398,151 @@ const languages = [
       </div>
     </section>
 
+    <!-- EXPERIENCE -->
+    <section class="section experience section--white" id="experience">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Trayectoria</p>
+          <h2>Experiencia <em>profesional</em>.</h2>
+          <p>Las marcas y equipos donde he diseñado, desarrollado y producido contenido.</p>
+        </div>
+
+        <div class="timeline">
+          {experience.map((job) => (
+            <div class={`bento-card timeline-card reveal-card ${job.current ? 'is-current' : ''}`}>
+              <div class="timeline-side">
+                <span class="timeline-period">{job.period}</span>
+                {job.current && <span class="timeline-flag">Actual</span>}
+              </div>
+              <div class="timeline-main">
+                <h3>{job.company}</h3>
+                <p class="timeline-role">{job.role}</p>
+                <ul class="timeline-points">
+                  {job.points.map((p) => <li>{p}</li>)}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section skills section--gray" id="skills">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Herramientas</p>
+          <h2><em>Software</em> que domino a diario.</h2>
+          <p>De la edición y el color en video al retoque fotográfico y el diseño.</p>
+        </div>
+      </div>
+
+      <div class="marquee">
+        <div class="marquee-track">
+          {[...toolBars, ...toolBars].map((t, i) => (
+            <div class="marquee-item" aria-hidden={i >= toolBars.length ? 'true' : undefined}>
+              <span class="marquee-badge" style={`background:${t.bg}; color:${t.fg};`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
+              </span>
+              <span class="marquee-label">{t.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="tool-grid">
+          {topTools.map((t) => (
+            <div class="bento-card tool-tile reveal-card" data-ticks>
+              <span class="tool-tile-icon" style={`background:${t.bg}; color:${t.fg};`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
+              </span>
+              <span class="tool-tile-name">{t.name}</span>
+              <span class="tool-tile-pct" data-pct-label={t.pct}>0%</span>
+              <div class="ticks">
+                {Array.from({ length: 24 }, (_, k) => <i class={k < Math.round(t.pct * 0.24) ? 'on' : ''} style={`--k:${k}`} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="tools-columns">
+          <div class="bento-card tools-col reveal-card">
+            <p class="eyebrow">Habilidades técnicas</p>
+            <h3>Lo que sé hacer</h3>
+            <div class="bars">
+              {buildSkills.map((s) => (
+                <div class="bar-row" data-ticks>
+                  <div class="bar-label">
+                    <span class="bar-tag" aria-label={s.tag} style={`background:${s.bg}; color:${s.fg};`}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
+                    </span>
+                    <span>{s.name}</span>
+                  </div>
+                  <div class="ticks">
+                    {Array.from({ length: 30 }, (_, k) => <i class={k < Math.round(s.pct * 0.3) ? 'on' : ''} style={`--k:${k}`} />)}
+                  </div>
+                  <span class="bar-pct" data-pct-label={s.pct}>0%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bento-card tools-col reveal-card">
+            <p class="eyebrow">IA &amp; automatización</p>
+            <h3>IA aplicada al trabajo real</h3>
+            <div class="rings-grid">
+              {aiRings.map((r) => (
+                <div class="ring-card">
+                  <span class="ring-wrap">
+                    <svg class="ring-svg" viewBox="0 0 120 120" data-ring data-pct={r.pct}>
+                      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                      <circle class="ring-progress" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <span class="ring-value" data-ring-value>0%</span>
+                  </span>
+                  <p class="ring-name"><i style={`background:${r.bg}`}></i>{r.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GEAR -->
+    <section class="section gear section--white" id="gear">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Producción audiovisual</p>
+          <h2><em>Equipo</em> de producción.</h2>
+          <p>Fotografía de producto y video de alta calidad, de la captura a la edición final.</p>
+        </div>
+      </div>
+
+      <div class="gear-marquee">
+        <div class="gear-track">
+          {[...gear, ...gear].map((g, i) => (
+            <div class="gear-card" aria-hidden={i >= gear.length ? 'true' : undefined}>
+              <span class="gear-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
+              </span>
+              <h3>{g.title}</h3>
+              <ul class="gear-list">
+                {g.items.map((it) => <li>{it}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- EDUCATION / CERTS -->
     <section class="section education section--gray" id="education">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="eyebrow">Formación</p>
-          <h2>Educación y certificaciones.</h2>
+          <h2><em>Educación</em> y certificaciones.</h2>
         </div>
         <div class="education-grid">
           <div class="bento-card edu-block reveal-card">
@@ -727,7 +597,7 @@ const languages = [
               <span class="contact-k">Ubicación</span>
               <span class="contact-v">Morelia, Michoacán, MX</span>
             </div>
-            <a href="/images/cv-juan-pablo-corona.jpg" download class="contact-item">
+            <a href="/cv-juan-pablo-corona.pdf" download="CV-Juan-Pablo-Corona.pdf" class="contact-item">
               <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.download} />
               <span class="contact-k">Currículum</span>
               <span class="contact-v">Descargar CV</span>
@@ -885,7 +755,7 @@ const languages = [
       document.querySelectorAll('[data-nav]').forEach((a) => a.classList.remove('is-active'));
       document.querySelector(`[data-nav][href="#${id}"]`)?.classList.add('is-active');
     };
-    ['about', 'skills', 'experience', 'gear', 'projects', 'contact'].forEach((id) => {
+    ['projects', 'about', 'experience', 'skills', 'gear', 'contact'].forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       ScrollTrigger.create({
@@ -899,9 +769,32 @@ const languages = [
     // Hero entrance
     gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.2 } })
       .from('.nav', { y: -20, opacity: 0, duration: 0.9 })
-      .from('.hero-photo', { scale: 0.9, opacity: 0 }, '-=0.7')
+      .from('.hero-photo', { y: 40, scale: 0.96, opacity: 0, duration: 1.4 }, '-=0.7')
       .from(['.hero-eyebrow', '.hero-name', '.hero-sub', '.hero-actions', '.hero-social', '.hero-meta'],
         { y: 24, opacity: 0, stagger: 0.08 }, '-=1');
+
+    // Hero portrait: the whole stage tilts toward the pointer; the cut-out
+    // sits on a closer Z layer, so it shifts more than the frame — depth.
+    const heroStage = document.querySelector('.hero-stage');
+    if (heroStage && !reduce && window.matchMedia('(pointer: fine)').matches) {
+      const rotX = gsap.quickTo(heroStage, 'rotationX', { duration: 0.9, ease: 'power3.out' });
+      const rotY = gsap.quickTo(heroStage, 'rotationY', { duration: 0.9, ease: 'power3.out' });
+      document.querySelector('.hero')?.addEventListener('pointermove', (e) => {
+        const nx = e.clientX / window.innerWidth - 0.5;
+        const ny = e.clientY / window.innerHeight - 0.5;
+        rotY(nx * 14);
+        rotX(-ny * 10);
+      });
+      document.querySelector('.hero')?.addEventListener('pointerleave', () => { rotX(0); rotY(0); });
+    }
+    // the cut-out lives 60px closer to the viewer than the frame; on scroll
+    // it drifts up a little faster than the frame
+    gsap.set('.hero-cutout', { z: 60, scale: 0.95 });
+    gsap.to('.hero-cutout', {
+      yPercent: -6,
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
 
     // Process: the connecting line draws across as the section scrolls in
     gsap.fromTo('.process-line-fill', { scaleX: 0 }, {
@@ -1125,39 +1018,139 @@ const languages = [
       align-items: center;
     }
     .hero-inner {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      text-align: center;
-      padding-top: 120px;
-      padding-bottom: 96px;
+      gap: 56px;
+      padding-top: 104px;
+      padding-bottom: 72px;
     }
+    /* portrait in a tall rounded card — the dark/orange backdrop of the
+       photo reads as a framed shot against the white page */
     .hero-photo {
-      width: 128px;
-      height: 128px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      margin-bottom: 28px;
+      position: relative;
+      margin: 0;
+      justify-self: end;
+      width: min(100%, 380px, calc((100svh - 170px) * 2 / 3));
+      aspect-ratio: 2 / 3;
+      perspective: 1200px;
     }
-    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-stage {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    /* the frame starts 20% down and stops 12% short on the right, so the
+       head clears the top edge and the camera lens clears the right edge */
+    .hero-frame {
+      position: absolute;
+      top: 20%; left: 0; right: 12%; bottom: 0;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #0d0d0f;
+      box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transform: translateZ(0);
+    }
+    .hero-glow {
+      position: absolute;
+      inset: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      filter: blur(28px) saturate(1.3);
+      opacity: 0.9;
+    }
+    .hero-cutout {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.28));
+    }
+    /* floats on the closest layer, over the frame's lower-left corner */
+    /* availability badge — dark glass like a camera's on-screen display,
+       floating on the closest 3D layer over the frame's lower-left corner */
+    .hero-badge {
+      position: absolute;
+      left: -26px; bottom: 8%;
+      transform: translateZ(90px);
+    }
+    .hero-badge-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 10px 10px 16px;
+      border-radius: 18px;
+      color: #fff;
+      background: rgba(14, 14, 18, 0.88);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: badge-float 5s ease-in-out infinite;
+      transition: background .3s ease;
+    }
+    .hero-badge-card:hover { background: rgba(14, 14, 18, 0.96); }
+    @keyframes badge-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    /* live dot with an expanding ring */
+    .hero-badge-dot {
+      position: relative;
+      width: 10px; height: 10px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #30d158;
+    }
+    .hero-badge-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #30d158;
+      animation: badge-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes badge-ping {
+      0% { transform: scale(1); opacity: 0.7; }
+      80%, 100% { transform: scale(2.8); opacity: 0; }
+    }
+    .hero-badge-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .hero-badge-text strong { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+    .hero-badge-text span { font-size: 12px; color: rgba(255, 255, 255, 0.62); }
+    .hero-badge-go {
+      width: 32px; height: 32px;
+      margin-left: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 11px;
+      background: var(--accent);
+      color: #fff;
+      transition: transform .5s var(--ease);
+    }
+    .hero-badge-go svg { width: 15px; height: 15px; transition: transform .5s var(--ease); }
+    .hero-badge-card:hover .hero-badge-go svg { transform: translate(2px, -2px); }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-badge-card, .hero-badge-dot::after { animation: none; }
+    }
     .hero-eyebrow { color: var(--ink-soft); font-weight: 500; }
     .hero-name {
       margin-top: 10px;
-      font-size: clamp(48px, 9vw, 104px);
-      font-weight: 700;
-      letter-spacing: -0.045em;
-      line-height: 1;
-      background: linear-gradient(180deg, #1d1d1f 30%, #4a4a50);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      padding-bottom: 0.06em;
+      font-size: var(--fs-display);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      line-height: 0.9;
+      color: var(--ink);
     }
     .hero-sub {
-      margin-top: 22px;
-      max-width: 600px;
-      font-size: clamp(19px, 2vw, 24px);
+      margin-top: 20px;
+      max-width: 520px;
+      font-size: var(--fs-lead);
       line-height: 1.38;
       color: var(--ink-soft);
     }
@@ -1167,7 +1160,6 @@ const languages = [
       align-items: center;
       gap: 28px;
       flex-wrap: wrap;
-      justify-content: center;
     }
     .text-link {
       display: inline-flex;
@@ -1249,9 +1241,12 @@ const languages = [
       margin-bottom: 18px;
     }
     .svc-icon svg { width: 19px; height: 19px; }
-    .svc h3 { font-size: 26px; }
-    .svc p { margin-top: 8px; font-size: 16px; color: var(--ink-soft); line-height: 1.45; }
+    .svc h3 { font-size: var(--fs-h3); }
+    .svc p { margin-top: 8px; font-size: 15px; color: var(--ink-soft); line-height: 1.45; }
     .svc-chips { margin-top: auto; padding-top: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+    /* About now sits on white, so its cards are gray: lift inner chips/bars to white */
+    .section--white :is(.svc-chips:not(.svc-chips--dark) span, .svc-chart span) { background: var(--white); }
+    .section--white .svc-browser { background: var(--white); }
     .svc-chips span {
       font-size: 12px;
       font-weight: 500;
@@ -1285,7 +1280,7 @@ const languages = [
       background-size: 200% 100%;
       animation: shimmer 2.4s ease-in-out infinite;
     }
-    .sk--hero { height: 54px; background: linear-gradient(120deg, #d6defe, #fdd5e6 60%, #fddcc2); animation: none; }
+    .sk--hero { height: 54px; background: linear-gradient(120deg, #d5dcff, #fdd5e6 60%, #fddcc2); animation: none; }
     .sk--line { height: 8px; }
     .sk--short { width: 60%; }
     .sk-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 4px; }
@@ -1300,7 +1295,7 @@ const languages = [
       gap: 6px;
     }
     .svc-layout span { border-radius: 8px; background: var(--gray-2); transition: all .9s var(--ease); }
-    .svc-layout span:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; background: linear-gradient(135deg, #0071e3, #7a5cff); }
+    .svc-layout span:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; background: linear-gradient(135deg, #2445ff, #19b5fe); }
     .svc-layout span:nth-child(2) { grid-column: 3; grid-row: 1; }
     .svc-layout span:nth-child(3) { grid-column: 3; grid-row: 2; }
     .svc-layout span:nth-child(4) { grid-column: 1; grid-row: 3; }
@@ -1353,7 +1348,7 @@ const languages = [
       left: 0; right: 0; bottom: 0;
       height: var(--h);
       border-radius: 980px;
-      background: #c9d6f7;
+      background: #cdd5ff;
       transform: scaleY(0);
       transform-origin: bottom;
       transition: transform 1s var(--ease) calc(.25s + var(--i) * 70ms);
@@ -1362,23 +1357,28 @@ const languages = [
     .svc.is-in .svc-chart span::after { transform: scaleY(1); }
     .stat-card {
       grid-column: span 3;
-      min-height: 190px;
-      padding: 24px;
+      min-height: 200px;
+      padding: 26px 22px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
     }
-    .stat-card--1 { background: linear-gradient(160deg, #eef2ff, #d6defe); }
+    .stat-card--1 { background: linear-gradient(160deg, #eef1ff, #d5dcff); }
     .stat-card--2 { background: linear-gradient(160deg, #fff0f6, #fdd5e6); }
     .stat-card--3 { background: linear-gradient(160deg, #fff5ec, #fddcc2); }
     .stat-card--4 { background: linear-gradient(160deg, #ecfaf3, #c9eedb); }
     .stat-label { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+    /* big condensed numbers in Morganite ExtraBold, same face as the titles */
     .stat-value {
-      font-size: clamp(56px, 6vw, 76px);
-      font-weight: 200;
-      letter-spacing: -0.05em;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
+      font-family: var(--font-display);
+      font-size: var(--fs-stat);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      line-height: 0.8;
+      color: var(--ink);
     }
 
     /* SKILLS — marquee */
@@ -1471,7 +1471,7 @@ const languages = [
     }
     .tools-col { padding: 34px; }
     .tools-col .eyebrow { font-size: 14px; }
-    .tools-col h3 { font-size: clamp(24px, 2.6vw, 30px); margin: 6px 0 28px; }
+    .tools-col h3 { font-size: var(--fs-h3); margin: 6px 0 24px; }
 
     .bars { display: flex; flex-direction: column; gap: 18px; }
     .bar-row {
@@ -1567,7 +1567,7 @@ const languages = [
       padding: 3px 10px;
       border-radius: 980px;
     }
-    .timeline-main h3 { font-size: 20px; }
+    .timeline-main h3 { font-size: var(--fs-h3); }
     .timeline-role { margin-top: 2px; font-size: 14px; font-weight: 500; color: var(--accent); }
     .timeline-points { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
     .timeline-points li {
@@ -1619,7 +1619,7 @@ const languages = [
       color: var(--accent);
     }
     .gear-icon svg { width: 21px; height: 21px; }
-    .gear-card h3 { margin-top: 20px; font-size: 22px; }
+    .gear-card h3 { margin-top: 20px; font-size: var(--fs-h3); }
     .gear-list { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
     .gear-list li { font-size: 15px; color: var(--ink-soft); }
 
@@ -1684,8 +1684,9 @@ const languages = [
       transition: transform .6s var(--ease), box-shadow .6s var(--ease);
     }
     .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    /* same proportions as the 1100×509 site screenshots, so nothing is cropped */
     .project-thumb {
-      height: 200px;
+      aspect-ratio: 1100 / 509;
       position: relative;
       overflow: hidden;
       background: var(--gray-2);
@@ -1843,8 +1844,8 @@ const languages = [
     }
     .edu-block, .lang-block { padding: 34px; }
     .edu-period { font-size: 14px; font-weight: 500; color: var(--ink-faint); }
-    .edu-block h3 { margin-top: 8px; font-size: 26px; }
-    .edu-block > p { margin-top: 8px; font-size: 16px; color: var(--ink-soft); }
+    .edu-block h3 { margin-top: 8px; font-size: var(--fs-h3); }
+    .edu-block > p { margin-top: 8px; font-size: 15px; color: var(--ink-soft); }
     .cert-list { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
     .cert-list li { display: flex; align-items: center; gap: 12px; font-size: 15px; }
     .cert-check {
@@ -1859,7 +1860,7 @@ const languages = [
     }
     .cert-check svg { width: 12px; height: 12px; }
     .lang-block .eyebrow { font-size: 14px; }
-    .lang-block h3 { margin-top: 6px; font-size: 26px; }
+    .lang-block h3 { margin-top: 6px; font-size: var(--fs-h3); }
     .lang-bars { margin-top: 28px; gap: 22px; }
     .lang-bars .bar-row { grid-template-columns: 70px 1fr 40px; }
 
@@ -1873,18 +1874,11 @@ const languages = [
       border-radius: 32px;
       background: var(--card);
     }
-    .contact-card h2 { margin-top: 10px; font-size: clamp(36px, 5vw, 52px); }
-    .contact-card h2 em {
-      font-style: normal;
-      background: linear-gradient(90deg, #0071e3, #7a5cff 55%, #e0457b);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    .contact-card h2 { margin-top: 10px; font-size: var(--fs-h2); }
     .contact-lead {
       margin: 16px 0 0;
       max-width: 480px;
-      font-size: 19px;
+      font-size: var(--fs-lead);
       color: var(--ink-soft);
     }
     .contact-email { margin-top: 30px; }
@@ -1938,7 +1932,7 @@ const languages = [
     .process-line-fill {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, #0071e3, #7a5cff);
+      background: linear-gradient(90deg, #2445ff, #19b5fe);
       transform-origin: left;
       transform: scaleX(0);
     }
@@ -1949,15 +1943,15 @@ const languages = [
     }
     .process-step.is-in:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
     .process-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; }
-    .process-top .svc-icon { margin: 0; background: var(--white); }
+    .process-top .svc-icon { margin: 0; }
     .process-num {
-      font-size: 44px;
+      font-size: 36px;
       font-weight: 200;
       letter-spacing: -0.05em;
       line-height: 1;
       color: var(--ink-faint);
     }
-    .process-step h3 { font-size: 22px; }
+    .process-step h3 { font-size: var(--fs-h3); }
     .process-step p { margin-top: 8px; font-size: 15px; color: var(--ink-soft); line-height: 1.45; }
     .footer-inner {
       border-top: 1px solid var(--line);
@@ -1971,6 +1965,11 @@ const languages = [
     }
 
     @media (max-width: 1000px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; padding-top: 96px; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-actions, .hero-social { justify-content: center; }
+      .hero-photo { justify-self: center; width: min(100%, 360px); }
+      .hero-badge { left: 12px; text-align: left; }
       .contact-card { grid-template-columns: 1fr; gap: 32px; text-align: center; }
       .contact-lead { margin: 16px auto 0; }
       .contact-grid { text-align: left; }
