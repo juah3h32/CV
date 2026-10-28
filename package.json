@@ -17,6 +17,7 @@
     "gsap": "^3.15.0"
   },
   "devDependencies": {
+    "qrcode": "^1.5.4",
     "simple-icons": "^16.36.0"
   }
 }

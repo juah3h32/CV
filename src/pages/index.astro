@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import fs from 'node:fs';
 import AppIcon from '../components/AppIcon.astro';
-import { toolBars, buildSkills, aiRings, experience, gear, projects, photoItems, certifications, languages } from '../data/profile';
+import { toolBars, buildSkills, aiRings, experience, gear, projects, photoItems, certifications, languages, appCase, stats, process } from '../data/profile';
 
 // Minimal line-icon set — straight-line/primitive SVG only (no curve commands)
 // so every glyph renders identically everywhere, no icon-font dependency.
@@ -47,21 +47,6 @@ const nav = [
   { href: '#skills', label: 'Habilidades', icon: 'grid' },
   { href: '#gear', label: 'Equipo', icon: 'camera' },
   { href: '#contact', label: 'Contacto', icon: 'mail' },
-];
-
-const stats = [
-  { value: 5, suffix: '+', label: 'Años de experiencia' },
-  { value: 6, suffix: '', label: 'Empresas / marcas' },
-  { value: 3, suffix: '', label: 'Proyectos destacados' },
-  { value: 5, suffix: '', label: 'Cámaras profesionales' },
-];
-
-// "Cómo trabajo" — the four steps every project goes through
-const process = [
-  { title: 'Idea y guion', desc: 'Entiendo la marca y el objetivo, y armo concepto, guion y lista de tomas antes de grabar.', icon: 'search' },
-  { title: 'Grabación', desc: 'Cámaras Sony, drones DJI, iluminación y audio profesional para foto y video de producto.', icon: 'camera' },
-  { title: 'Edición y post', desc: 'Montaje, color, motion graphics y retoque en Premiere, After Effects, DaVinci y Photoshop.', icon: 'film' },
-  { title: 'Publicar y medir', desc: 'Formatos para redes, campañas y web, con métricas y reportes automatizados con IA.', icon: 'bolt' },
 ];
 
 // The tile grid shows only the five most-used apps in one row — video
@@ -172,7 +157,7 @@ for (const p of projects) {
           </a>
         </div>
         <div class="hero-social">
-          <a href="mailto:Coronapablo99@gmail.com" aria-label="Email">
+          <a href="mailto:coronapablo99@gmail.com" aria-label="Email">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.mail} />
           </a>
           <a href="tel:4434845466" aria-label="Teléfono">
@@ -303,6 +288,66 @@ for (const p of projects) {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- APP CASE — featured mobile app, phones in perspective on a dark stage -->
+    <section class="section app-case section--white" id="app">
+      <div class="wrap app-inner">
+        <div class="app-copy" data-reveal>
+          <p class="eyebrow">Caso destacado · App móvil</p>
+          <h2>{appCase.name}, <em>e-commerce</em> a domicilio.</h2>
+          <p class="app-lead">
+            App estilo Rappi para que los negocios pidan sus insumos desde el celular:
+            catálogo, carrito y entrega a domicilio. Diseñé y desarrollé la experiencia
+            completa apoyándome en herramientas de IA.
+          </p>
+          <ul class="app-features">
+            {appCase.features.map((f) => (
+              <li>
+                <span class="app-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={icons[f.icon]} /></span>
+                {f.text}
+              </li>
+            ))}
+          </ul>
+          <div class="app-tags">{appCase.tags.map((t) => <span>{t}</span>)}</div>
+        </div>
+
+        <div class="app-stage">
+          <div class="app-glow" aria-hidden="true"></div>
+          <div class="app-phones">
+            <div class="phone phone--side phone--left" aria-hidden="true">
+              <div class="phone-screen">
+                <div class="phone-status"><span>9:41</span><i></i></div>
+                <img src={appCase.screens[2].image} alt="" loading="lazy" />
+              </div>
+              <span class="phone-island"></span>
+            </div>
+            <div class="phone phone--main" id="appPhone">
+              <div class="phone-screen">
+                <div class="phone-status"><span>9:41</span><i></i></div>
+                <div class="phone-shots">
+                  {appCase.screens.map((sc, i) => (
+                    <img class={i === 0 ? 'is-active' : ''} data-screen={sc.id} src={sc.image} alt={`${appCase.name} — pantalla ${sc.label}`} loading="lazy" />
+                  ))}
+                </div>
+              </div>
+              <span class="phone-island"></span>
+            </div>
+            <div class="phone phone--side phone--right" aria-hidden="true">
+              <div class="phone-screen">
+                <div class="phone-status"><span>9:41</span><i></i></div>
+                <img src={appCase.screens[3].image} alt="" loading="lazy" />
+              </div>
+              <span class="phone-island"></span>
+            </div>
+          </div>
+          <div class="app-switch" role="tablist" aria-label="Pantallas de la app">
+            {appCase.screens.map((sc, i) => (
+              <button type="button" class={`app-switch-btn ${i === 0 ? 'is-active' : ''}`} data-target={sc.id} role="tab" aria-selected={i === 0 ? 'true' : 'false'}>{sc.label}</button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -526,17 +571,21 @@ for (const p of projects) {
         </div>
       </div>
 
-      <div class="gear-marquee">
-        <div class="gear-track">
-          {[...gear, ...gear].map((g, i) => (
-            <div class="gear-card" aria-hidden={i >= gear.length ? 'true' : undefined}>
-              <span class="gear-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
-              </span>
-              <h3>{g.title}</h3>
-              <ul class="gear-list">
-                {g.items.map((it) => <li>{it}</li>)}
-              </ul>
+      <!-- one dark spec panel: a column per category with a big count -->
+      <div class="wrap">
+        <div class="gear-panel reveal-card">
+          {gear.map((g) => (
+            <div class="gear-col">
+              <span class="gear-num" data-count={g.items.length} data-suffix="">{g.items.length}</span>
+              <div class="gear-info">
+                <div class="gear-head">
+                  <span class="gear-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[g.icon]} />
+                  </span>
+                  <h3>{g.title}</h3>
+                </div>
+                <p class="gear-list">{g.items.join(' · ')}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -590,7 +639,7 @@ for (const p of projects) {
           <p class="eyebrow">Contacto</p>
           <h2>¿Trabajamos <em>juntos</em>?</h2>
           <p class="contact-lead">Disponible para proyectos freelance, colaboraciones y producción audiovisual.</p>
-          <a href="mailto:Coronapablo99@gmail.com" class="btn btn-primary contact-email">Coronapablo99@gmail.com</a>
+          <a href="mailto:coronapablo99@gmail.com" class="btn btn-primary contact-email">coronapablo99@gmail.com</a>
           </div>
           <div class="contact-grid">
             <a href="tel:4434845466" class="contact-item">
@@ -682,6 +731,64 @@ for (const p of projects) {
         else stopRail();
       });
     });
+
+    // App case: the center phone cycles through the screens while the
+    // section is on screen; clicking a label jumps to that screen.
+    const appShots = [...document.querySelectorAll('#appPhone [data-screen]')];
+    const appBtns = [...document.querySelectorAll('.app-switch-btn')];
+    let appIdx = 0;
+    let appTimer = 0;
+    let appAuto = !reduce;
+    const APP_INTERVAL = 3200;
+    const showScreen = (i) => {
+      appIdx = (i + appShots.length) % appShots.length;
+      appShots.forEach((img, k) => img.classList.toggle('is-active', k === appIdx));
+      appBtns.forEach((b, k) => {
+        b.classList.toggle('is-active', k === appIdx);
+        b.setAttribute('aria-selected', k === appIdx ? 'true' : 'false');
+        // restart the progress fill on the active label while autoplaying
+        b.classList.remove('is-timing');
+        if (k === appIdx && appAuto) { void b.offsetWidth; b.classList.add('is-timing'); }
+      });
+    };
+    const appPlay = () => {
+      clearInterval(appTimer);
+      if (!appAuto) return;
+      showScreen(appIdx);
+      appTimer = setInterval(() => showScreen(appIdx + 1), APP_INTERVAL);
+    };
+    document.querySelector('.app-switch')?.style.setProperty('--app-interval', `${APP_INTERVAL}ms`);
+    appBtns.forEach((b, k) => b.addEventListener('click', () => {
+      appAuto = false;
+      clearInterval(appTimer);
+      showScreen(k);
+    }));
+    if (appShots.length) {
+      ScrollTrigger.create({
+        trigger: '.app-case',
+        start: 'top 70%',
+        end: 'bottom 30%',
+        onToggle: (self) => (self.isActive ? appPlay() : clearInterval(appTimer)),
+      });
+      // Scroll-scrubbed entrance: the center phone rises and straightens while
+      // the side phones open out from behind it into the resting fan.
+      const mm = gsap.matchMedia();
+      mm.add({ wide: '(min-width: 641px)', narrow: '(max-width: 640px)' }, (ctx) => {
+        const spread = ctx.conditions.wide ? 80 : 56;
+        const rest = { y: ctx.conditions.wide ? 30 : 26, scale: ctx.conditions.wide ? 0.84 : 0.8 };
+        if (reduce) {
+          gsap.set('.phone--left', { x: 0, xPercent: -spread, rotateY: 16, ...rest });
+          gsap.set('.phone--right', { x: 0, xPercent: spread, rotateY: -16, ...rest });
+          return;
+        }
+        gsap.timeline({ scrollTrigger: { trigger: '.app-stage', start: 'top 90%', end: 'center 55%', scrub: 0.8 } })
+          .fromTo('.phone--main', { y: 110, rotateX: 16, scale: 0.94 }, { y: 0, rotateX: 0, scale: 1, ease: 'none' }, 0)
+          .fromTo('.phone--left', { x: 0, xPercent: 0, y: 60, rotateY: 0, scale: 0.78, opacity: 0 }, { x: 0, xPercent: -spread, rotateY: 16, opacity: 1, ease: 'none', ...rest }, 0.1)
+          .fromTo('.phone--right', { x: 0, xPercent: 0, y: 60, rotateY: 0, scale: 0.78, opacity: 0 }, { x: 0, xPercent: spread, rotateY: -16, opacity: 1, ease: 'none', ...rest }, 0.1);
+      });
+      // once in place, the whole group floats gently
+      if (!reduce) gsap.to('.app-phones', { y: -10, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    }
 
     // Video cards play muted; the speaker button toggles sound
     document.querySelectorAll('.video-sound').forEach((btn) => {
@@ -814,6 +921,40 @@ for (const p of projects) {
       scaleX: 1,
       ease: 'none',
       scrollTrigger: { trigger: '.process-grid', start: 'top 80%', end: 'bottom 55%', scrub: 0.6 },
+    });
+
+    // Stacked-cards scroll, only at a few key moments: when the section before
+    // a `.stack` section reaches the bottom of the viewport it stays pinned
+    // while the `.stack` section rises over it like a card, and the covered
+    // one eases back slightly. Desktop only — pinning on touch scrolling feels
+    // jumpy — and off for reduced motion.
+    const STACK_IDS = ['projects', 'app', 'contact'];
+    const stackMM = gsap.matchMedia();
+    stackMM.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+      const sections = [...document.querySelectorAll('main > section')];
+      sections.forEach((sec, i) => {
+        sec.style.zIndex = String(i + 1);
+        if (STACK_IDS.includes(sec.id)) sec.classList.add('stack-card');
+      });
+      sections.slice(0, -1).forEach((sec, i) => {
+        const next = sections[i + 1];
+        if (!STACK_IDS.includes(next.id)) return;
+        ScrollTrigger.create({
+          trigger: sec,
+          start: 'bottom bottom',
+          endTrigger: next,
+          end: 'top top',
+          pin: true,
+          pinSpacing: false,
+        });
+        gsap.fromTo(sec, { scale: 1, opacity: 1 }, {
+          scale: 0.94,
+          opacity: 0.55,
+          ease: 'none',
+          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true },
+        });
+      });
+      return () => sections.forEach((sec) => { sec.classList.remove('stack-card'); sec.style.zIndex = ''; });
     });
 
     // Section headings: fade + rise
@@ -1424,7 +1565,7 @@ for (const p of projects) {
       to { transform: translateX(-50%); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .marquee-track, .gear-track { animation: none; }
+      .marquee-track { animation: none; }
     }
 
     /* tick bars — a row of hairline ticks that light up left to right */
@@ -1591,42 +1732,233 @@ for (const p of projects) {
       background: var(--ink-faint);
     }
 
-    /* GEAR */
-    .gear-marquee {
+    /* GEAR — dark spec panel: a 3×2 grid of equal tiles, number left, details right */
+    .gear-panel {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: 1fr;
+      border-radius: 28px;
       overflow: hidden;
-      padding: 4px 0;
-      mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      background: radial-gradient(120% 140% at 50% -20%, #1b2140 0%, #0b0b0d 55%);
+      color: #f5f5f7;
+      box-shadow: 0 40px 80px -40px rgba(10, 12, 40, 0.55);
     }
-    .gear-track {
-      display: flex;
-      width: max-content;
-      gap: 16px;
-      animation: marquee-scroll 44s linear infinite;
+    .gear-col {
+      position: relative;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      align-items: center;
+      gap: 20px;
+      padding: 26px 28px;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background .5s var(--ease);
     }
-    .gear-marquee:hover .gear-track { animation-play-state: paused; }
-    .gear-card {
-      width: 270px;
-      flex-shrink: 0;
-      padding: 28px;
-      border-radius: var(--radius);
-      background: var(--gray);
-      transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+    .gear-col:nth-child(3n + 1) { border-left: 0; }
+    .gear-col:nth-child(n + 4) { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    /* hovered tile lights up with a cobalt wash */
+    .gear-col::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(70% 90% at 15% 50%, rgba(36, 69, 255, 0.3), transparent 70%);
+      opacity: 0;
+      transition: opacity .5s var(--ease);
+      pointer-events: none;
     }
-    .gear-card:hover { transform: scale(1.02); box-shadow: var(--shadow-md); }
+    .gear-col:hover::before { opacity: 1; }
+    .gear-num {
+      position: relative;
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 72px;
+      line-height: 0.8;
+      background: linear-gradient(180deg, #ffffff, #8da0ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .gear-info { position: relative; min-width: 0; }
+    .gear-head { display: flex; align-items: center; gap: 10px; }
     .gear-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: var(--white);
-      color: var(--accent);
+      width: 28px; height: 28px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #8da0ff;
+      transition: background .4s ease, color .4s ease;
     }
-    .gear-icon svg { width: 21px; height: 21px; }
-    .gear-card h3 { margin-top: 20px; font-size: var(--fs-h3); }
-    .gear-list { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
-    .gear-list li { font-size: 15px; color: var(--ink-soft); }
+    .gear-col:hover .gear-icon { background: var(--accent); color: #fff; }
+    .gear-icon svg { width: 15px; height: 15px; }
+    .gear-col h3 { font-size: 24px; color: #fff; }
+    .gear-list { margin-top: 8px; font-size: 13px; line-height: 1.5; color: rgba(245, 245, 247, 0.62); }
+    @media (max-width: 1000px) {
+      .gear-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gear-col:nth-child(3n + 1) { border-left: 1px solid rgba(255, 255, 255, 0.08); }
+      .gear-col:nth-child(odd) { border-left: 0; }
+      .gear-col:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    }
+    @media (max-width: 640px) {
+      .gear-panel { grid-template-columns: 1fr; }
+      .gear-col, .gear-col:nth-child(odd) { border-left: 0; }
+      .gear-col:nth-child(n + 2) { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+      .gear-num { font-size: 60px; }
+    }
+
+    /* APP CASE — white stage with phone mockups */
+    .app-case { overflow: hidden; }
+    .app-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+    /* nudge only the phones away from the copy; the text column keeps its width */
+    @media (min-width: 1001px) {
+      .app-stage { left: 72px; }
+    }
+    .app-copy h2 { font-size: var(--fs-h2); margin-top: 10px; }
+    .app-lead { margin-top: 16px; font-size: var(--fs-lead); line-height: 1.5; color: var(--ink-soft); }
+    .app-features { margin-top: 24px; display: grid; gap: 10px; }
+    .app-features li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--ink); }
+    .app-feature-icon {
+      width: 30px; height: 30px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      background: rgba(227, 27, 35, 0.08);
+      color: #e31b23;
+    }
+    .app-feature-icon svg { width: 15px; height: 15px; }
+    .app-tags { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .app-tags span {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 980px;
+      color: var(--ink-soft);
+      background: var(--gray);
+    }
+
+    .app-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+    /* faint blush in the app's red behind the phones */
+    .app-glow {
+      position: absolute;
+      top: 6%; left: 50%;
+      width: 78%; height: 72%;
+      transform: translateX(-50%);
+      background: radial-gradient(closest-side, rgba(227, 27, 35, 0.16), transparent);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+    .app-phones { position: relative; width: 100%; height: 460px; perspective: 1400px; }
+    .phone {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 210px;
+      margin-left: -105px;
+      padding: 8px;
+      border-radius: 38px;
+      background: linear-gradient(145deg, #2c2c30, #111113);
+      box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.14), 0 40px 70px -28px rgba(20, 20, 40, 0.45);
+      transform-style: preserve-3d;
+    }
+    .phone--main { z-index: 2; }
+    .phone--side { z-index: 1; }
+    /* resting fan (GSAP scrubs into this state; also the no-JS fallback) */
+    .phone--left { transform: translateX(-80%) translateY(30px) rotateY(16deg) scale(0.84); }
+    .phone--right { transform: translateX(80%) translateY(30px) rotateY(-16deg) scale(0.84); }
+    .phone-screen { position: relative; border-radius: 31px; overflow: hidden; background: #fff; }
+    /* drawn status bar — the real one was cropped off the screenshots */
+    .phone-status {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 22px 0 26px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #111;
+      background: #fff;
+    }
+    .phone-status i { width: 20px; height: 9px; border-radius: 3px; border: 1.5px solid #111; position: relative; }
+    .phone-status i::after { content: ''; position: absolute; inset: 1.5px 4px 1.5px 1.5px; border-radius: 1px; background: #111; }
+    .phone-island {
+      position: absolute;
+      top: 15px; left: 50%;
+      width: 64px; height: 19px;
+      margin-left: -32px;
+      border-radius: 10px;
+      background: #000;
+    }
+    .phone-screen > img, .phone-shots img { display: block; width: 100%; height: auto; }
+    .phone-shots { position: relative; aspect-ratio: 600 / 1242; background: #fff; overflow: hidden; }
+    /* the incoming screen fades in over the outgoing one with a soft settle */
+    .phone-shots img {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity .7s ease, transform 1.1s var(--ease);
+    }
+    .phone-shots img.is-active { opacity: 1; transform: none; z-index: 1; }
+
+    .app-switch {
+      position: relative;
+      z-index: 3;
+      display: inline-flex;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 980px;
+      background: var(--gray-2);
+    }
+    .app-switch-btn {
+      position: relative;
+      overflow: hidden;
+      border: 0;
+      padding: 7px 14px;
+      border-radius: 980px;
+      background: transparent;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 500;
+      transition: background .3s ease, color .3s ease;
+    }
+    .app-switch-btn:hover { color: var(--ink); }
+    .app-switch-btn.is-active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+    /* while autoplaying, the active label fills like a progress bar */
+    .app-switch-btn::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 3px;
+      height: 2px;
+      border-radius: 2px;
+      background: #e31b23;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .app-switch-btn.is-timing::after { animation: app-progress var(--app-interval, 3.2s) linear forwards; }
+    @keyframes app-progress { to { transform: scaleX(1); } }
+
+    @media (max-width: 1000px) {
+      .app-inner { grid-template-columns: 1fr; }
+      .app-copy { text-align: center; }
+      .app-features { max-width: 420px; margin-left: auto; margin-right: auto; text-align: left; }
+      .app-tags { justify-content: center; }
+    }
+    @media (max-width: 640px) {
+      .app-phones { height: 420px; }
+      .phone { width: 190px; margin-left: -95px; }
+      .phone--left { transform: translateX(-56%) translateY(26px) rotateY(16deg) scale(0.8); }
+      .phone--right { transform: translateX(56%) translateY(26px) rotateY(-16deg) scale(0.8); }
+      .app-switch { flex-wrap: wrap; justify-content: center; border-radius: 20px; }
+    }
 
     /* PROJECTS — segmented control */
     .seg-wrap { display: flex; justify-content: center; }

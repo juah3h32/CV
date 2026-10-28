@@ -8,7 +8,7 @@ export const person = {
   shortName: 'Juan Pablo Corona',
   title: 'Videógrafo · Fotógrafo · Creador de contenido digital',
   degree: 'Ing. Entornos Virtuales y Negocios Digitales',
-  email: 'Coronapablo99@gmail.com',
+  email: 'coronapablo99@gmail.com',
   phone: '443 484 5466',
   phoneHref: 'tel:4434845466',
   location: 'Morelia, Michoacán, México',
@@ -57,11 +57,11 @@ export const experience = [
     period: '2025 — Presente',
     current: true,
     points: [
+      'Producción audiovisual y fotografía de productos.',
+      'Desarrollo de app para e-commerce con roles de usuario y módulo completo de repartidor.',
       'Desarrollo de páginas web corporativas.',
       'Creación de animaciones y efectos interactivos.',
       'Diseño UI/UX y optimización para dispositivos móviles.',
-      'Producción audiovisual y fotografía de productos.',
-      'Desarrollo de app para e-commerce con roles de usuario y módulo completo de repartidor.',
       'Automatización de reportes y métricas con IA.',
     ],
   },
@@ -168,4 +168,42 @@ export const photoItems = [
   { name: 'Charolas Naturizable', desc: 'Fotografía de producto — packaging biodegradable.', image: '/images/photography/charolas-stack.jpg' },
   { name: 'Charola biodegradable', desc: 'Fotografía de producto — packaging Naturizable.', image: '/images/photography/charola-plana.jpg' },
   { name: 'Charola Naturizable', desc: 'Fotografía de producto — en uso.', image: '/images/photography/charola-mano.jpg' },
+];
+
+// Featured app case study (TPN). Screens live in public/images/app/,
+// cropped below the phone status bar so the mockup can draw its own.
+export const appCase = {
+  name: 'TPN',
+  screens: [
+    { id: 'inicio', label: 'Inicio', image: '/images/app/inicio.webp' },
+    { id: 'tienda', label: 'Tienda', image: '/images/app/tienda.webp' },
+    { id: 'producto', label: 'Producto', image: '/images/app/producto.webp' },
+    { id: 'carrito', label: 'Carrito', image: '/images/app/carrito.webp' },
+    { id: 'entrega', label: 'Entrega', image: '/images/app/entrega.webp' },
+  ],
+  features: [
+    { icon: 'grid', text: 'Catálogo por categorías, búsqueda y favoritos' },
+    { icon: 'bolt', text: 'Carrito con cupones y envío gratis por monto' },
+    { icon: 'pin', text: 'Dirección de entrega con mapa de Google' },
+    { icon: 'user', text: 'Roles de usuario y módulo completo de repartidor' },
+    { icon: 'devices', text: 'Diseño UI/UX móvil, de la idea a la app funcional' },
+    { icon: 'chip', text: 'Desarrollada con apoyo de herramientas de IA' },
+  ],
+  tags: ['App móvil', 'E-commerce', 'UI/UX', 'Google Maps', 'IA'],
+};
+
+// Headline numbers (site "Sobre mí" cards and the CV key-numbers strip)
+export const stats = [
+  { value: 5, suffix: '+', label: 'Años de experiencia' },
+  { value: experience.length, suffix: '', label: 'Empresas / marcas' },
+  { value: 3, suffix: '', label: 'Proyectos destacados' },
+  { value: 5, suffix: '', label: 'Cámaras profesionales' },
+];
+
+// "Cómo trabajo" — the four steps every project goes through
+export const process = [
+  { title: 'Idea y guion', desc: 'Entiendo la marca y el objetivo, y armo concepto, guion y lista de tomas antes de grabar.', icon: 'search' },
+  { title: 'Grabación', desc: 'Cámaras Sony, drones DJI, iluminación y audio profesional para foto y video de producto.', icon: 'camera' },
+  { title: 'Edición y post', desc: 'Montaje, color, motion graphics y retoque en Premiere, After Effects, DaVinci y Photoshop.', icon: 'film' },
+  { title: 'Publicar y medir', desc: 'Formatos para redes, campañas y web, con métricas y reportes automatizados con IA.', icon: 'bolt' },
 ];
